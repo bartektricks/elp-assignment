@@ -37,3 +37,18 @@ Serve the project:
 ```shellscript
 pnpm start
 ```
+
+## Notes
+
+### Stack
+
+#### Development
+
+- [Remix](https://remix.run/) - never tried it before and I thought it would be a good opportunity to learn something new
+- [URQL](https://github.com/urql-graphql/urql) - my first time with graphql outside of Gatsby's internal implementation. Tried Apollo but I had some caching and import paths issues
+
+#### Code quality
+
+- [Biome](https://biome.sh/) - I have migrated from ESLint to Biome because we use it company wide and it's really fast
+- [Lefthook](https://github.com/evilmartians/lefthook) - git hooks manager, really good replacement for husky, has simple API
+- [Commitlint](https://commitlint.js.org/) - to enforce conventional commits (corporate habits :D)
