@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      # Biome ignores unknown files.
+      run: pnpm biome check --apply --staged --no-errors-on-unmatched
+      stage_fixed: true
+    typecheck:
+      glob: "*.{ts,tsx}"
+      run: pnpm tsc {staged_files}
