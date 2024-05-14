@@ -60,6 +60,7 @@ pnpm start
 
 - [Remix](https://remix.run/) - never tried it before and I thought it would be a good opportunity to learn something new
 - [URQL](https://github.com/urql-graphql/urql) - my first time with graphql outside of Gatsby's internal implementation. Tried Apollo but I had some caching and import paths issues
+- [Codegen](https://graphql-code-generator.com/) - to generate types for the queries and mutations
 
 #### Code quality
 
