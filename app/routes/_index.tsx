@@ -1,4 +1,5 @@
 import type { MetaFunction } from '@remix-run/node';
+import { env } from '~/utils/env';
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,5 +9,5 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  return <div>Hello world</div>;
+  return <div>{env.GH_AUTH_TOKEN}</div>;
 }
