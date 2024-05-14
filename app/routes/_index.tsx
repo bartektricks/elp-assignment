@@ -1,6 +1,7 @@
-import { type LoaderFunction, type MetaFunction, json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import { graphql } from '~/libs/graphql.server';
+import type { LoaderFunction } from '@remix-run/node';
+import { type MetaFunction, json, useLoaderData } from '@remix-run/react';
+import { graphql } from '~/gql';
+import { gqlClient } from '~/libs/gqlClient.server';
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,23 +10,22 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+const USER = graphql(`query User($userName: String!) {
+  user(login: $userName) {
+    id
+    email
+    name
+    login
+    location
+    websiteUrl
+  }
+}`);
+
 export const loader: LoaderFunction = async () => {
-  const res = await graphql
-    .query(
-      `query User($userName: String!) {
-        user(login: $userName) {
-          id
-          email
-          name
-          login
-          location
-          websiteUrl
-        }
-      }`,
-      {
-        userName: 'bartektricks',
-      },
-    )
+  const res = await gqlClient
+    .query(USER, {
+      userName: 'bartektricks',
+    })
     .toPromise();
 
   if (res.error ?? !res.data) {

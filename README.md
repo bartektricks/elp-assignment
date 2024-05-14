@@ -24,6 +24,14 @@ Run the dev server:
 pnpm dev
 ```
 
+Run the codegen if you have made changes to the GraphQL schema:
+
+```shellscript
+pnpm codegen
+```
+
+Note: this could be done automatically with a git hook or a postinstall, but I didn't want to overcomplicate the setup and exceed the rate limit.
+
 ## Deployment
 
 Build the project:

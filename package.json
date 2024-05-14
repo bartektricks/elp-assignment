@@ -9,7 +9,8 @@
     "dev": "remix vite:dev",
     "check": "biome check . --apply",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "codegen": "graphql-codegen --require tsconfig-paths/register dotenv/config --config codegen.ts"
   },
   "dependencies": {
     "@remix-run/node": "^2.9.2",
@@ -27,9 +28,13 @@
     "@biomejs/biome": "1.7.3",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.5",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@remix-run/dev": "^2.9.2",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "graphql": "^16.8.1",
     "lefthook": "^1.6.11",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",

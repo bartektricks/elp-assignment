@@ -1,10 +1,11 @@
 import { requestPolicyExchange } from '@urql/exchange-request-policy';
 import { Client, cacheExchange, fetchExchange } from 'urql';
-import { env } from '~/utils/env';
+import { GITHUB_API_URL } from '~/utils/constants';
+import getAuthorizationHeader from '~/utils/getAuthorizationHeader.server';
 
 const createClient = () =>
   new Client({
-    url: 'https://api.github.com/graphql',
+    url: GITHUB_API_URL,
     exchanges: [
       requestPolicyExchange({
         ttl: 1000 * 10, // 1 minute
@@ -28,18 +29,16 @@ const createClient = () =>
     },
     fetchOptions() {
       return {
-        headers: {
-          Authorization: env.GH_AUTH_TOKEN ? `Bearer ${env.GH_AUTH_TOKEN}` : '',
-        },
+        headers: getAuthorizationHeader(),
         credentials: 'include',
       };
     },
   });
 
 const globalForGql = globalThis as unknown as {
-  graphql: ReturnType<typeof createClient> | undefined;
+  gqlClient: ReturnType<typeof createClient> | undefined;
 };
 
-export const graphql = globalForGql.graphql ?? createClient();
+export const gqlClient = globalForGql.gqlClient ?? createClient();
 
-if (process.env.NODE_ENV !== 'production') globalForGql.graphql = graphql;
+if (process.env.NODE_ENV !== 'production') globalForGql.gqlClient = gqlClient;
