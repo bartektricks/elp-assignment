@@ -8,3 +8,8 @@ pre-commit:
     typecheck:
       glob: "*.{ts,tsx}"
       run: pnpm tsc
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm commitlint --edit $1
+      args: ["$1"]
