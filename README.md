@@ -32,6 +32,12 @@ pnpm codegen
 
 Note: this could be done automatically with a git hook or a postinstall, but I didn't want to overcomplicate the setup and exceed the rate limit.
 
+You can also use the watch mode for the codegen:
+
+```shellscript
+pnpm codegen --watch
+```
+
 ## Deployment
 
 Build the project:
