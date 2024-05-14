@@ -7,4 +7,4 @@ pre-commit:
       stage_fixed: true
     typecheck:
       glob: "*.{ts,tsx}"
-      run: pnpm tsc {staged_files}
+      run: pnpm tsc
