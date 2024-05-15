@@ -1,7 +1,7 @@
 import { type LoaderFunctionArgs, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { getSearchResults } from '~/libs/api/search.server';
-import getSearchQueryParam from '~/utils/getSearchQueryParam';
+import getSearchQueryParam from '~/utils/getSearchQueryParam.server';
 import statusCodes from '~/utils/statusCodes.server';
 
 const DEFAULT_QUERY = 'bartek';

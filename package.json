@@ -10,7 +10,8 @@
     "check": "biome check . --apply",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
-    "codegen": "graphql-codegen --require tsconfig-paths/register dotenv/config --config codegen.ts"
+    "codegen": "graphql-codegen --require tsconfig-paths/register dotenv/config --config codegen.ts",
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.13",
@@ -37,16 +38,20 @@
     "@graphql-typed-document-node/core": "^3.2.0",
     "@parcel/watcher": "^2.4.1",
     "@remix-run/dev": "^2.9.2",
+    "@testing-library/react": "^15.0.7",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "@vitest/coverage-v8": "^1.6.0",
     "autoprefixer": "^10.4.19",
     "graphql": "^16.8.1",
+    "jsdom": "^24.0.0",
     "lefthook": "^1.6.11",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^1.6.0"
   },
   "engineStrict": true,
   "engines": {

@@ -15,7 +15,7 @@ import {
 } from '@remix-run/react';
 import Header from './components/Header';
 import styles from './index.css?url';
-import getSearchQueryParam from './utils/getSearchQueryParam';
+import getSearchQueryParam from './utils/getSearchQueryParam.server';
 import statusCodes from './utils/statusCodes.server';
 
 export const links: LinksFunction = () => [
