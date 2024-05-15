@@ -20,7 +20,17 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function Index() {
-  const data = useLoaderData<typeof loader>();
+  const { repository, user } = useLoaderData<typeof loader>();
 
-  return <pre className="overflow-x-auto">{JSON.stringify(data, null, 2)}</pre>;
+  const totalResults = repository.repositoryCount + user.userCount;
+
+  return (
+    <main className="mx-auto max-w-[59.375rem] px-4">
+      <h1 className="typography-l pt-8 pb-5">
+        {totalResults.toLocaleString()} results
+      </h1>
+      <pre>{JSON.stringify(repository, null, 2)}</pre>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
+    </main>
+  );
 }

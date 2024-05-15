@@ -8,12 +8,10 @@ const SearchQuery = graphql(`
       edges {
         node {
           ... on User {
-            login
             name
             bio
-            followers {
-              totalCount
-            }
+            location
+            avatarUrl
           }
         }
       }
@@ -24,17 +22,18 @@ const SearchQuery = graphql(`
         node {
           ... on Repository {
             name
-            url
             description
             primaryLanguage {
               name
+              color
             }
             stargazers {
               totalCount
             }
-            forks {
-              totalCount
+            licenseInfo {
+              name
             }
+            updatedAt
           }
         }
       }
