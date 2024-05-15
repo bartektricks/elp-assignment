@@ -1,3 +1,4 @@
+import robotoFont from '@fontsource/roboto/500.css?url';
 import type { LinksFunction } from '@remix-run/node';
 import {
   Links,
@@ -14,6 +15,7 @@ export const links: LinksFunction = () => [
     href: '/favicon.png',
     type: 'image/png',
   },
+  { rel: 'stylesheet', href: robotoFont },
   { rel: 'stylesheet', href: styles },
 ];
 

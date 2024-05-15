@@ -13,6 +13,7 @@
     "codegen": "graphql-codegen --require tsconfig-paths/register dotenv/config --config codegen.ts"
   },
   "dependencies": {
+    "@fontsource/roboto": "^5.0.13",
     "@remix-run/node": "^2.9.2",
     "@remix-run/react": "^2.9.2",
     "@remix-run/serve": "^2.9.2",
