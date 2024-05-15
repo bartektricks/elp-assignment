@@ -22,7 +22,7 @@ const SEARCH_QUERY_PARAM = 'q';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const q = url.searchParams.get(SEARCH_QUERY_PARAM) ?? '';
+  const q = url.searchParams.get(SEARCH_QUERY_PARAM);
 
   const res = await getSearchResults(q ?? DEFAULT_QUERY);
 
@@ -47,7 +47,7 @@ export default function Index() {
   const onChange = debounce<[e: React.ChangeEvent<HTMLInputElement>]>(
     { delay: 250 },
     (e) => {
-      const isFirstSearch = q === '';
+      const isFirstSearch = q === null;
 
       submit(
         { q: e.target.value },
@@ -65,7 +65,7 @@ export default function Index() {
         name={SEARCH_QUERY_PARAM}
         placeholder="Search"
         onChange={onChange}
-        defaultValue={q}
+        defaultValue={q ?? ''}
         disabled={isSearching}
       />
       <pre>{JSON.stringify(data, null, 2)}</pre>
