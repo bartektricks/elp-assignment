@@ -3,6 +3,7 @@ import {
   type MetaFunction,
   json,
   useLoaderData,
+  useNavigation,
   useSubmit,
 } from '@remix-run/react';
 import { debounce } from 'radash';
@@ -17,10 +18,11 @@ export const meta: MetaFunction = () => {
 };
 
 const DEFAULT_QUERY = 'bartek';
+const SEARCH_QUERY_PARAM = 'q';
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const q = url.searchParams.get('q') ?? '';
+  const q = url.searchParams.get(SEARCH_QUERY_PARAM) ?? '';
 
   const res = await getSearchResults(q ?? DEFAULT_QUERY);
 
@@ -36,23 +38,35 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   const { data, q } = useLoaderData<typeof loader>();
   const submit = useSubmit();
+  const navigation = useNavigation();
 
-  const debouncedSubmit = debounce<[e: string]>({ delay: 220 }, (value) => {
-    submit({ q: value });
-  });
+  const isSearching =
+    navigation.location &&
+    new URLSearchParams(navigation.location.search).has(SEARCH_QUERY_PARAM);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedSubmit(e.target.value);
-  };
+  const onChange = debounce<[e: React.ChangeEvent<HTMLInputElement>]>(
+    { delay: 250 },
+    (e) => {
+      const isFirstSearch = q === '';
+
+      submit(
+        { q: e.target.value },
+        {
+          replace: !isFirstSearch,
+        },
+      );
+    },
+  );
 
   return (
     <div>
       <input
         type="search"
-        name="q"
+        name={SEARCH_QUERY_PARAM}
         placeholder="Search"
         onChange={onChange}
         defaultValue={q}
+        disabled={isSearching}
       />
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
