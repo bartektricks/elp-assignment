@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "query User($userName: String!) {\n  user(login: $userName) {\n    id\n    email\n    name\n    login\n    location\n    websiteUrl\n  }\n}": types.UserDocument,
+    "\n  query Search($query: String!){\n    user: search(query: $query, type: USER, first: 5) {\n      userCount\n      edges {\n        node {\n          ... on User {\n            login\n            name\n            bio\n            followers {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n    repository: search(query: $query, type: REPOSITORY, first: 5) {\n      repositoryCount\n      edges {\n        node {\n          ... on Repository {\n            name\n            url\n            description\n            primaryLanguage {\n              name\n            }\n            stargazers {\n              totalCount\n            }\n            forks {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n  }": types.SearchDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query User($userName: String!) {\n  user(login: $userName) {\n    id\n    email\n    name\n    login\n    location\n    websiteUrl\n  }\n}"): (typeof documents)["query User($userName: String!) {\n  user(login: $userName) {\n    id\n    email\n    name\n    login\n    location\n    websiteUrl\n  }\n}"];
+export function graphql(source: "\n  query Search($query: String!){\n    user: search(query: $query, type: USER, first: 5) {\n      userCount\n      edges {\n        node {\n          ... on User {\n            login\n            name\n            bio\n            followers {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n    repository: search(query: $query, type: REPOSITORY, first: 5) {\n      repositoryCount\n      edges {\n        node {\n          ... on Repository {\n            name\n            url\n            description\n            primaryLanguage {\n              name\n            }\n            stargazers {\n              totalCount\n            }\n            forks {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n  }"): (typeof documents)["\n  query Search($query: String!){\n    user: search(query: $query, type: USER, first: 5) {\n      userCount\n      edges {\n        node {\n          ... on User {\n            login\n            name\n            bio\n            followers {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n    repository: search(query: $query, type: REPOSITORY, first: 5) {\n      repositoryCount\n      edges {\n        node {\n          ... on Repository {\n            name\n            url\n            description\n            primaryLanguage {\n              name\n            }\n            stargazers {\n              totalCount\n            }\n            forks {\n              totalCount\n            }\n          }\n        }\n      }\n    }\n  }"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,14 +1,21 @@
 import { requestPolicyExchange } from '@urql/exchange-request-policy';
 import { Client, cacheExchange, fetchExchange } from 'urql';
 import { GITHUB_API_URL } from '~/utils/constants';
+import { env } from '~/utils/env';
 import getAuthorizationHeader from '~/utils/getAuthorizationHeader.server';
+
+const getTimeToLive = () => {
+  if (env.NODE_ENV === 'production') return 1000 * 60 * 2; // 2 minutes
+
+  return 1000 * 60; // 1 minute
+};
 
 const createClient = () =>
   new Client({
     url: GITHUB_API_URL,
     exchanges: [
       requestPolicyExchange({
-        ttl: 1000 * 10, // 1 minute
+        ttl: getTimeToLive(),
         shouldUpgrade: (op) => op.context.requestPolicy !== 'cache-only',
       }),
       cacheExchange,

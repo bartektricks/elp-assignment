@@ -10,21 +10,53 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-const USER = graphql(`query User($userName: String!) {
-  user(login: $userName) {
-    id
-    email
-    name
-    login
-    location
-    websiteUrl
-  }
-}`);
+const SearchQuery = graphql(`
+  query Search($query: String!){
+    user: search(query: $query, type: USER, first: 5) {
+      userCount
+      edges {
+        node {
+          ... on User {
+            login
+            name
+            bio
+            followers {
+              totalCount
+            }
+          }
+        }
+      }
+    }
+    repository: search(query: $query, type: REPOSITORY, first: 5) {
+      repositoryCount
+      edges {
+        node {
+          ... on Repository {
+            name
+            url
+            description
+            primaryLanguage {
+              name
+            }
+            stargazers {
+              totalCount
+            }
+            forks {
+              totalCount
+            }
+          }
+        }
+      }
+    }
+  }`);
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const q = url.searchParams.get('q') ?? 'michal';
+
   const res = await gqlClient
-    .query(USER, {
-      userName: 'bartektricks',
+    .query(SearchQuery, {
+      query: q,
     })
     .toPromise();
 
@@ -38,5 +70,5 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const data = useLoaderData<typeof loader>();
 
-  return <div>{JSON.stringify(data)}</div>;
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
