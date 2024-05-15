@@ -11,7 +11,7 @@ const config: CodegenConfig = {
       },
     },
   },
-  documents: ['app/**/*.tsx'],
+  documents: ['app/**/*.{ts,tsx}'],
   overwrite: true,
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
