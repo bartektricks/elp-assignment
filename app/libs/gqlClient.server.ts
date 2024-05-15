@@ -3,6 +3,7 @@ import { Client, cacheExchange, fetchExchange } from 'urql';
 import { GITHUB_API_URL } from '~/utils/constants';
 import { env } from '~/utils/env';
 import getAuthorizationHeader from '~/utils/getAuthorizationHeader.server';
+import { logger } from './logger.server';
 
 const getTimeToLive = () => {
   if (env.NODE_ENV === 'production') return 1000 * 60 * 2; // 2 minutes
@@ -30,8 +31,8 @@ const createClient = () =>
         reset: res.headers.get('X-RateLimit-Reset'),
       };
 
-      // TODO: add Pino for better logging
-      console.log(rateLimit); // log rate limit for personal tracking
+      // log rate limit for personal tracking
+      logger.info(rateLimit, 'GitHub API rate limit headers');
       return res;
     },
     fetchOptions() {
@@ -48,4 +49,4 @@ const globalForGql = globalThis as unknown as {
 
 export const gqlClient = globalForGql.gqlClient ?? createClient();
 
-if (process.env.NODE_ENV !== 'production') globalForGql.gqlClient = gqlClient;
+if (env.NODE_ENV !== 'production') globalForGql.gqlClient = gqlClient;
