@@ -10,5 +10,5 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function User() {
   const data = useLoaderData<typeof loader>();
 
-  return <div>{JSON.stringify(data)}</div>;
+  return <pre className="overflow-x-auto">{JSON.stringify(data)}</pre>;
 }

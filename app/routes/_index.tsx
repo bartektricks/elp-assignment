@@ -22,5 +22,5 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   const data = useLoaderData<typeof loader>();
 
-  return <div>{JSON.stringify(data)}</div>;
+  return <pre className="overflow-x-auto">{JSON.stringify(data, null, 2)}</pre>;
 }
