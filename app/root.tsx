@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
+import styles from './index.css?url';
 
 export const links: LinksFunction = () => [
   {
@@ -13,6 +14,7 @@ export const links: LinksFunction = () => [
     href: '/favicon.png',
     type: 'image/png',
   },
+  { rel: 'stylesheet', href: styles },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
