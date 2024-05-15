@@ -42,6 +42,7 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
     "autoprefixer": "^10.4.19",
     "graphql": "^16.8.1",
     "jsdom": "^24.0.0",

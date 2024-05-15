@@ -2,7 +2,7 @@
 
 import { vitePlugin as remix } from '@remix-run/dev';
 import { installGlobals } from '@remix-run/node';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { coverageConfigDefaults } from 'vitest/config';
 
@@ -13,7 +13,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    env: loadEnv('test', process.cwd(), ''),
     coverage: {
       enabled: true,
       exclude: [
@@ -21,6 +20,8 @@ export default defineConfig({
         'build/**',
         'codegen.ts',
         '*.config.*',
+        'constants.ts', // static values
+        'env.ts', // external library
         ...coverageConfigDefaults.exclude,
       ],
     },
