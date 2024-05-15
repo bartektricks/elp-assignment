@@ -23,6 +23,9 @@ importers:
       '@urql/exchange-request-policy':
         specifier: ^1.2.0
         version: 1.2.0(@urql/core@5.0.3(graphql@16.8.1))
+      isbot:
+        specifier: ^5.1.6
+        version: 5.1.6
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -2544,6 +2547,10 @@ packages:
 
   isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
+
+  isbot@5.1.6:
+    resolution: {integrity: sha512-Phksj1A0dBP/M/5xeOx0zWemKlZRQvrbNzI19/HWso0uodiOcR8YYCXN60IdzwbKsGj5LnxPkMy6FuBtgckMNw==}
+    engines: {node: '>=18'}
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
@@ -7017,6 +7024,8 @@ snapshots:
   is-windows@1.0.2: {}
 
   isarray@1.0.0: {}
+
+  isbot@5.1.6: {}
 
   isexe@2.0.0: {}
 
