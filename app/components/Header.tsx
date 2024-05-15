@@ -48,7 +48,7 @@ export default function Header({ queryValue }: HeaderProps) {
         </svg>
       </Link>
       <input
-        className="typography-m rounded-md border border-current bg-transparent px-4 py-1.5 text-light-gray-3"
+        className="typography-m rounded-md border border-current bg-transparent px-4 py-1.5 text-light-gray-3 disabled:pointer-events-none disabled:opacity-30"
         type="text"
         role="searchbox"
         name={SEARCH_QUERY_PARAM}
