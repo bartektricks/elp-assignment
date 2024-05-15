@@ -8,6 +8,8 @@ pre-commit:
     typecheck:
       glob: "*.{ts,tsx}"
       run: pnpm tsc
+    test:
+      run: pnpm vitest run --coverage.enabled=false
 commit-msg:
   commands:
     commitlint:

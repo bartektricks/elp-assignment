@@ -11,7 +11,7 @@
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "codegen": "graphql-codegen --require tsconfig-paths/register dotenv/config --config codegen.ts",
-    "test": "vitest run --coverage"
+    "test": "vitest run"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.13",

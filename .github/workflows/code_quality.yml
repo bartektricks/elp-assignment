@@ -44,3 +44,6 @@ jobs:
 
       - name: Run typecheck
         run: pnpm tsc
+
+      - name: Run tests
+        run: pnpm vitest run --coverage
