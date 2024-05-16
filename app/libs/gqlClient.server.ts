@@ -22,7 +22,6 @@ const createClient = () =>
       cacheExchange,
       fetchExchange,
     ],
-    suspense: true,
     async fetch(...args) {
       const res = await fetch(...args);
       const rateLimit = {
