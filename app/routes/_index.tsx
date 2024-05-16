@@ -2,6 +2,7 @@ import { type LoaderFunctionArgs, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import LanguageTag from '~/components/LanguageTag';
 import ListCard from '~/components/ListCard';
+import RelativeTimeTag from '~/components/RelativeTimeTag';
 import { getSearchResults } from '~/libs/api/search.server';
 import getSearchQueryParam from '~/utils/getSearchQueryParam.server';
 import statusCodes from '~/utils/statusCodes.server';
@@ -34,13 +35,20 @@ export default function Index() {
       <ul>
         {repository.edges?.map((edge) => {
           if (edge?.node?.__typename !== 'Repository') return null;
-          const repo = edge.node;
-
-          const stars = repo.stargazers.totalCount;
+          const {
+            name,
+            owner,
+            description,
+            primaryLanguage,
+            licenseInfo,
+            updatedAt,
+            issues,
+            stargazers,
+          } = edge.node;
 
           return (
             <ListCard
-              key={repo.name}
+              key={name}
               type={edge.node.__typename}
               image={
                 <img
@@ -51,21 +59,23 @@ export default function Index() {
                   alt={'repo icon'}
                 />
               }
-              title={`${repo.owner.login}/${repo.name}`}
+              title={`${owner.login}/${name}`}
               link="#"
-              body={repo.description}
+              body={description}
               footer={
                 <>
-                  <span>star: {stars}</span>
-                  {repo.primaryLanguage && (
-                    <LanguageTag {...repo.primaryLanguage} />
+                  <span>star: {stargazers.totalCount}</span>
+                  {primaryLanguage && <LanguageTag {...primaryLanguage} />}
+                  {licenseInfo && licenseInfo.name !== 'Other' && (
+                    <span>{licenseInfo.name}</span>
                   )}
-                  {repo.licenseInfo && <span>{repo.licenseInfo.name}</span>}
-                  {typeof repo.updatedAt === 'string' && (
-                    <time dateTime={repo.updatedAt}>{repo.updatedAt}</time>
+                  {typeof updatedAt === 'string' && (
+                    <RelativeTimeTag dateTime={updatedAt} />
                   )}
-                  {repo.issues.totalCount > 0 && (
-                    <span>{repo.issues.totalCount} issues need help</span>
+                  {issues.totalCount > 0 && (
+                    <span>
+                      {issues.totalCount.toLocaleString()} issues need help
+                    </span>
                   )}
                 </>
               }
@@ -75,29 +85,29 @@ export default function Index() {
 
         {user.edges?.map((edge) => {
           if (edge?.node?.__typename !== 'User') return null;
-          const user = edge.node;
+          const { name, avatarUrl, login, bio, location } = edge.node;
 
           return (
             <ListCard
-              key={user.login}
+              key={login}
               type={edge.node.__typename}
               image={
-                <a href={user.avatarUrl} target="_blank" rel="noreferrer">
+                <a href={avatarUrl} target="_blank" rel="noreferrer">
                   <img
                     loading="lazy"
                     width={20}
                     height={20}
                     className="rounded-full"
-                    src={user.avatarUrl}
-                    alt={`${user.name} avatar`.trim()}
+                    src={avatarUrl}
+                    alt={`${name} avatar`.trim()}
                   />
                 </a>
               }
-              title={user.name ?? user.login}
-              subtitle={user.login}
-              link={`/users/${user.login}`}
-              body={user.bio}
-              footer={user.location}
+              title={name ?? login}
+              subtitle={login}
+              link={`/users/${login}`}
+              body={bio}
+              footer={location}
             />
           );
         })}
