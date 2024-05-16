@@ -5,7 +5,7 @@ import { env } from '~/utils/env';
 import getAuthorizationHeader from '~/utils/getAuthorizationHeader.server';
 import { logger } from './logger.server';
 
-const getTimeToLive = () => {
+export const getTimeToLive = () => {
   if (env.NODE_ENV === 'production') return 1000 * 60 * 2; // 2 minutes
 
   return 1000 * 60; // 1 minute
