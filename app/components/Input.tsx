@@ -4,7 +4,7 @@ type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'className'
 > & {
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 export default function Input({ isLoading, disabled, ...props }: InputProps) {
@@ -20,10 +20,8 @@ export default function Input({ isLoading, disabled, ...props }: InputProps) {
         role="status"
         aria-hidden="true"
         className={clsx(
-          'before:loader-5 before:loader-color-dark-gray -translate-y-1/2 absolute top-1/2 right-3 before:p-1 before:opacity-0',
-          {
-            'before:opacity-100': isLoading,
-          },
+          'before:loader-5 before:loader-color-dark-gray -translate-y-1/2 absolute top-1/2 right-3 before:p-1',
+          isLoading ? 'before:opacity-100' : 'before:opacity-0',
         )}
       />
     </div>
