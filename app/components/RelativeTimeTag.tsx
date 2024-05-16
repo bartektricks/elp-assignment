@@ -4,5 +4,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 export default function RelativeTimeTag({ dateTime }: { dateTime: string }) {
-  return <time dateTime={dateTime}>Updated {dayjs(dateTime).fromNow()}</time>;
+  const date = dayjs(dateTime);
+
+  if (!date.isValid()) {
+    return null;
+  }
+
+  return <time dateTime={dateTime}>Updated {date.fromNow()}</time>;
 }
