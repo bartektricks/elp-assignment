@@ -7,11 +7,13 @@ type InputProps = Omit<
   isLoading: boolean;
 };
 
-export default function Input({ isLoading, ...props }: InputProps) {
+export default function Input({ isLoading, disabled, ...props }: InputProps) {
   return (
     <div className="relative">
       <input
         className="typography-m rounded-md border border-current bg-transparent px-4 py-1.5 text-light-gray-3 disabled:pointer-events-none disabled:opacity-30"
+        aria-busy={isLoading}
+        disabled={isLoading ?? disabled}
         {...props}
       />
       <span

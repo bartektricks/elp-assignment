@@ -56,7 +56,6 @@ export default function Header({ queryValue }: HeaderProps) {
         placeholder="Search"
         onChange={onChange}
         defaultValue={queryValue ?? ''}
-        disabled={isSearching}
         isLoading={isSearching}
       />
     </header>
