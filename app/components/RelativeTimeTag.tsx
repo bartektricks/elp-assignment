@@ -1,14 +1,12 @@
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-
-dayjs.extend(relativeTime);
+import { isValid } from 'date-fns';
+import getRelativeDate from '~/utils/getRelativeDate';
 
 export default function RelativeTimeTag({ dateTime }: { dateTime: string }) {
-  const date = dayjs(dateTime);
+  const date = new Date(dateTime);
 
-  if (!date.isValid()) {
+  if (!isValid(date)) {
     return null;
   }
 
-  return <time dateTime={dateTime}>Updated {date.fromNow()}</time>;
+  return <time dateTime={dateTime}>Updated {getRelativeDate(date)}</time>;
 }
