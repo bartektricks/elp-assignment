@@ -54,6 +54,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@0no-co/graphqlsp':
+        specifier: ^1.12.3
+        version: 1.12.3(graphql@16.8.1)(typescript@5.4.5)
       '@biomejs/biome':
         specifier: 1.7.3
         version: 1.7.3
@@ -72,6 +75,9 @@ importers:
       '@graphql-typed-document-node/core':
         specifier: ^3.2.0
         version: 3.2.0(graphql@16.8.1)
+      '@octokit/graphql-schema':
+        specifier: ^15.15.0
+        version: 15.15.0
       '@parcel/watcher':
         specifier: ^2.4.1
         version: 2.4.1
@@ -133,6 +139,12 @@ packages:
     peerDependenciesMeta:
       graphql:
         optional: true
+
+  '@0no-co/graphqlsp@1.12.3':
+    resolution: {integrity: sha512-U0hV/FmFgm2perV+mrXKe/7Z5F4/9rmOziHJYYQgKLwzUVuN5LQG0qs3cLBGxAqoosG0HfTi2cQkgMKY1CMbYQ==}
+    peerDependencies:
+      graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
+      typescript: ^5.0.0
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -862,6 +874,12 @@ packages:
   '@fontsource/roboto@5.0.13':
     resolution: {integrity: sha512-j61DHjsdUCKMXSdNLTOxcG701FWnF0jcqNNQi2iPCDxU8seN/sMxeh62dC++UiagCWq9ghTypX+Pcy7kX+QOeQ==}
 
+  '@gql.tada/internal@1.0.0':
+    resolution: {integrity: sha512-B55aIYyZn5ewdgMqoJciPAwF5DKYX6HBabTU+ap/dpNH3EgJrLomc8Y8w+MCxCyOx+dXL9OduT6eWnVr7J7Eyg==}
+    peerDependencies:
+      graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
+      typescript: ^5.0.0
+
   '@graphql-codegen/add@5.0.2':
     resolution: {integrity: sha512-ouBkSvMFUhda5VoKumo/ZvsZM9P5ZTyDsI8LW18VxSNWOjrTeLXBWHG8Gfaai0HwhflPtCYVABbriEcOmrRShQ==}
     peerDependencies:
@@ -1137,6 +1155,9 @@ packages:
   '@npmcli/promise-spawn@6.0.2':
     resolution: {integrity: sha512-gGq0NJkIGSwdbUt4yhdF8ZrmkGKVz9vAdVzpOfnom+V8PLSmSOVhZwbNvZZS1EYcJN5hzzKBxmmVVAInM6HQLg==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+
+  '@octokit/graphql-schema@15.15.0':
+    resolution: {integrity: sha512-zl0KLQqin8SsiW+kN5919Vbwfqa89qBOr0Has+PDAzYypPJzmzQnEY/o+hZAdP3SOna8cbNam42L+Lyz0xXK/Q==}
 
   '@parcel/watcher-android-arm64@2.4.1':
     resolution: {integrity: sha512-LOi/WTbbh3aTn2RYddrO8pnapixAziFl6SMxHM69r3tvdSm94JtCenaKgk1GRg5FJ5wpMCpHeW+7yqPlvZv7kg==}
@@ -4801,6 +4822,12 @@ snapshots:
     optionalDependencies:
       graphql: 16.8.1
 
+  '@0no-co/graphqlsp@1.12.3(graphql@16.8.1)(typescript@5.4.5)':
+    dependencies:
+      '@gql.tada/internal': 1.0.0(graphql@16.8.1)(typescript@5.4.5)
+      graphql: 16.8.1
+      typescript: 5.4.5
+
   '@alloc/quick-lru@5.2.0': {}
 
   '@ampproject/remapping@2.3.0':
@@ -5480,6 +5507,12 @@ snapshots:
 
   '@fontsource/roboto@5.0.13': {}
 
+  '@gql.tada/internal@1.0.0(graphql@16.8.1)(typescript@5.4.5)':
+    dependencies:
+      '@0no-co/graphql.web': 1.0.7(graphql@16.8.1)
+      graphql: 16.8.1
+      typescript: 5.4.5
+
   '@graphql-codegen/add@5.0.2(graphql@16.8.1)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.0.3(graphql@16.8.1)
@@ -6010,6 +6043,11 @@ snapshots:
   '@npmcli/promise-spawn@6.0.2':
     dependencies:
       which: 3.0.1
+
+  '@octokit/graphql-schema@15.15.0':
+    dependencies:
+      graphql: 16.8.1
+      graphql-tag: 2.12.6(graphql@16.8.1)
 
   '@parcel/watcher-android-arm64@2.4.1':
     optional: true
