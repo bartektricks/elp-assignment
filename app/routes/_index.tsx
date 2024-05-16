@@ -7,14 +7,12 @@ import { getSearchResults } from '~/libs/api/search.server';
 import getSearchQueryParam from '~/utils/getSearchQueryParam.server';
 import statusCodes from '~/utils/statusCodes.server';
 
-const DEFAULT_QUERY = 'bartek';
-
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const q = getSearchQueryParam(request);
-  const res = await getSearchResults(q ?? DEFAULT_QUERY);
+  const q = getSearchQueryParam(request) ?? '';
+  const res = await getSearchResults(q);
 
   if (res.error ?? !res.data) {
-    throw json(`Failed to fetch query: ${q ?? DEFAULT_QUERY}`, {
+    throw json(`Failed to fetch query: ${q}`, {
       status: statusCodes.HTTP_STATUS_NOT_FOUND,
     });
   }
@@ -28,7 +26,7 @@ export default function Index() {
   const totalResults = repository.repositoryCount + user.userCount;
 
   return (
-    <main className="mx-auto max-w-[59.375rem] px-4">
+    <main className="mx-auto w-full max-w-[59.375rem] px-4">
       <h1 className="typography-l pt-8 pb-5">
         {totalResults.toLocaleString()} results
       </h1>
