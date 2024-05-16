@@ -20,8 +20,6 @@ export default defineConfig({
         'build/**',
         'codegen.ts',
         '*.config.*',
-        'constants.ts', // static values
-        'env.ts', // external library
         ...coverageConfigDefaults.exclude,
       ],
     },
