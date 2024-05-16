@@ -2,8 +2,8 @@ import { graphql } from '~/gql';
 import { gqlClient } from '../gqlClient.server';
 
 const SearchQuery = graphql(`
-  query Search($query: String!){
-    user: search(query: $query, type: USER, first: 5) {
+  query Search($repoQuery: String!, $userQuery: String!){
+    user: search(query: $userQuery, type: USER, first: 5) {
       userCount
       edges {
         node {
@@ -17,7 +17,7 @@ const SearchQuery = graphql(`
         }
       }
     }
-    repository: search(query: $query, type: REPOSITORY, first: 5) {
+    repository: search(query: $repoQuery, type: REPOSITORY, first: 5) {
       repositoryCount
       edges {
         node {
@@ -50,7 +50,8 @@ const SearchQuery = graphql(`
 export function getSearchResults(query: string) {
   return gqlClient
     .query(SearchQuery, {
-      query,
+      userQuery: `${query} type:user`,
+      repoQuery: query,
     })
     .toPromise();
 }

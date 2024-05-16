@@ -24,19 +24,13 @@ Run the dev server:
 pnpm dev
 ```
 
-Run the codegen if you have made changes to the GraphQL schema:
-
-```shellscript
-pnpm codegen
-```
-
-Note: this could be done automatically with a git hook or a postinstall, but I didn't want to overcomplicate the setup and exceed the rate limit.
-
-You can also use the watch mode for the codegen:
+Run the codegen in watch mode:
 
 ```shellscript
 pnpm codegen --watch
 ```
+
+NOTE: in this version of the project the codegen should take the schema from node_modules so it's not abusing the GitHub API rate limit.
 
 ## Deployment
 

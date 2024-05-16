@@ -10,6 +10,7 @@ describe('getSearchResults', () => {
     const results = await getSearchResults(query);
 
     expect(results.operation.context.url).toContain('github');
-    expect(results.operation.variables.query).toBe(query);
+    expect(results.operation.variables.repoQuery).toBe(query);
+    expect(results.operation.variables.userQuery).toBe(`${query} type:user`);
   });
 });
