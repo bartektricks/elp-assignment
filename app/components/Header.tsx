@@ -1,6 +1,6 @@
 import { Link, useNavigation, useSubmit } from '@remix-run/react';
 import { debounce } from 'radash';
-import { SEARCH_QUERY_PARAM } from '~/utils/getSearchQueryParam.server';
+import { SEARCH_QUERY_PARAM } from '~/utils/constants';
 
 type HeaderProps = {
   queryValue: string | null;

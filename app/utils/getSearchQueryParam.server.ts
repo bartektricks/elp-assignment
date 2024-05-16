@@ -1,4 +1,4 @@
-export const SEARCH_QUERY_PARAM = 'q';
+import { SEARCH_QUERY_PARAM } from './constants';
 
 export default function getSearchQueryParam(request: Request) {
   const url = new URL(request.url);
