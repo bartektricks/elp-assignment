@@ -40,7 +40,7 @@ export default function ListCard({
         {footer && (
           <footer
             className={clsx(
-              'typography-xxs flex items-center gap-3.5',
+              'typography-xxs flex flex-wrap items-center gap-x-3.5 gap-y-1 text-nowrap',
               isUser ? 'mt-2' : 'mt-4',
             )}
           >
