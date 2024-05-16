@@ -103,7 +103,7 @@ export default function Index() {
               }
               title={name ?? login}
               subtitle={login}
-              link={`/users/${login}`}
+              link={`/user/${login}`}
               body={bio}
               footer={location}
             />
