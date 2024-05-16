@@ -57,6 +57,7 @@ export default function Header({ queryValue }: HeaderProps) {
         defaultValue={queryValue ?? ''}
         disabled={isSearching}
       />
+      <div className="before:loader-6 before:loader-color-blue before:loader-thickness-1" />
     </header>
   );
 }

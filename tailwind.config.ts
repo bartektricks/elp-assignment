@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
-import generateFontsPlugin from './plugins/generateFontsPlugin';
+import generateFontsPlugin from './plugins/generateFonts';
+import generateLoaderPlugin from './plugins/generateLoader';
 
 export default {
   content: ['./app/**/*.{ts,tsx}'],
@@ -31,5 +32,5 @@ export default {
       current: 'currentColor',
     },
   },
-  plugins: [generateFontsPlugin()],
+  plugins: [generateFontsPlugin(), generateLoaderPlugin()],
 } satisfies Config;
