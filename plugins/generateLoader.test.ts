@@ -6,16 +6,7 @@ test('should generate loader classes', async () => {
     plugins: [generateLoader()],
   });
 
-  // Loader
   expect(css).contain('loader');
   expect(css).contain('mask');
   expect(css).contain('-webkit-mask');
-
-  // Thickness
-  expect(css).contain('loader-thickness-0');
-  expect(css).contain('loader-thickness-1\\.5');
-  expect(css).contain('loader-thickness-10');
-
-  // Color
-  expect(css).contain('loader-color-red');
 });

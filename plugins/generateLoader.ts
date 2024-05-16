@@ -23,22 +23,6 @@ const generateLoader = () =>
       },
       { values: theme('spacing') },
     );
-    matchComponents(
-      {
-        'loader-color': (value: string) => ({
-          backgroundColor: value,
-        }),
-      },
-      { values: theme('colors') },
-    );
-    matchComponents(
-      {
-        'loader-thickness': (value: string) => ({
-          padding: value,
-        }),
-      },
-      { values: theme('spacing') },
-    );
   });
 
 export default generateLoader;
