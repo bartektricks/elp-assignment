@@ -9,6 +9,7 @@ const SearchQuery = graphql(`
         node {
           ... on User {
             name
+            login
             bio
             location
             avatarUrl
@@ -23,6 +24,9 @@ const SearchQuery = graphql(`
           ... on Repository {
             name
             description
+            owner {
+              login
+            }
             primaryLanguage {
               name
               color
@@ -32,6 +36,9 @@ const SearchQuery = graphql(`
             }
             licenseInfo {
               name
+            }
+            issues {
+              totalCount
             }
             updatedAt
           }

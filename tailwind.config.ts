@@ -27,6 +27,7 @@ export default {
         1: '#F3F5F7',
         2: '#EFF1F3',
         3: '#D0D7DE',
+        4: '#C4C4C4', // wasn't in the figma color styles
       },
       transparent: 'transparent',
       current: 'currentColor',

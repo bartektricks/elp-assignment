@@ -69,3 +69,8 @@ pnpm start
 - [Biome](https://biome.sh/) - I have migrated from ESLint to Biome because we use it company wide and it's really fast
 - [Lefthook](https://github.com/evilmartians/lefthook) - git hooks manager, really good replacement for husky, has simple API
 - [Commitlint](https://commitlint.js.org/) - to enforce conventional commits (corporate habits :D)
+
+#### Testing
+
+- [Vitest](https://vitest.dev/) - unit tests
+- [Testing Library React](https://testing-library.com/docs/react-testing-library/intro/) - for testing React components
