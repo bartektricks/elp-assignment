@@ -1,29 +1,37 @@
 import clsx from 'clsx';
+import { type ForwardedRef, forwardRef } from 'react';
 
 type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'className'
 > & {
-  isLoading?: boolean;
+  icon?: React.ReactNode;
 };
 
-export default function Input({ isLoading, disabled, ...props }: InputProps) {
+const Input = forwardRef(function Input(
+  { icon, ...props }: InputProps,
+  ref: ForwardedRef<HTMLInputElement>,
+) {
   return (
-    <div className="relative">
+    <div className="relative text-light-gray-3">
       <input
-        className="typography-m rounded-md border border-current bg-transparent px-4 py-1.5 text-light-gray-3 disabled:pointer-events-none disabled:opacity-30"
-        aria-busy={isLoading}
-        disabled={isLoading ?? disabled}
+        ref={ref}
         {...props}
-      />
-      <span
-        role="status"
-        aria-hidden="true"
         className={clsx(
-          'before:loader-5 before:loader-color-dark-gray -translate-y-1/2 absolute top-1/2 right-3 before:p-1',
-          isLoading ? 'before:opacity-100' : 'before:opacity-0',
+          'typography-m rounded-md border border-current bg-transparent py-1.5 disabled:opacity-30',
+          icon ? 'pr-8 pl-4' : 'px-4',
         )}
       />
+      {icon && (
+        <span
+          data-testid="input-icon"
+          className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-3"
+        >
+          {icon}
+        </span>
+      )}
     </div>
   );
-}
+});
+
+export default Input;

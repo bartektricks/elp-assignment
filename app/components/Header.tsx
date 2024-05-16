@@ -1,5 +1,6 @@
 import { Link, useNavigation, useSubmit } from '@remix-run/react';
 import { debounce } from 'radash';
+import { useEffect, useRef } from 'react';
 import { SEARCH_QUERY_PARAM } from '~/utils/constants';
 import Input from './Input';
 
@@ -7,9 +8,32 @@ type HeaderProps = {
   queryValue: string | null;
 };
 
+const FOCUS_KEY = '/';
+
 export default function Header({ queryValue }: HeaderProps) {
+  const ref = useRef<HTMLInputElement>(null);
   const submit = useSubmit();
   const navigation = useNavigation();
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === FOCUS_KEY) {
+      e.preventDefault();
+      ref.current?.focus();
+      ref.current?.select();
+    }
+
+    if (e.key === 'Escape') {
+      ref.current?.blur();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   const isSearching = Boolean(
     navigation.location &&
@@ -50,14 +74,37 @@ export default function Header({ queryValue }: HeaderProps) {
         </svg>
       </Link>
       <Input
+        ref={ref}
         type="text"
         role="searchbox"
         name={SEARCH_QUERY_PARAM}
         placeholder="Search"
         onChange={onChange}
         defaultValue={queryValue ?? ''}
-        isLoading={isSearching}
+        disabled={isSearching}
+        icon={<SearchIcon isLoading={isSearching} />}
       />
     </header>
+  );
+}
+
+function SearchIcon({ isLoading }: { isLoading: boolean }) {
+  if (isLoading) {
+    return (
+      <span
+        role="status"
+        aria-hidden="true"
+        className="loader-5 loader-color-dark-gray p-1"
+      />
+    );
+  }
+
+  return (
+    <span
+      role="presentation"
+      className="typography-s rounded-sm border border-current px-0.5 opacity-40"
+    >
+      {FOCUS_KEY}
+    </span>
   );
 }

@@ -1,40 +1,33 @@
 import { render, screen } from '@testing-library/react';
 import Input from './Input';
 
+const INPUT_ICON_CLASSES = 'pr-8 pl-4';
+
 describe('Input', () => {
-  test('should render with default styles', () => {
-    const { container } = render(<Input name="text" />);
+  test('should render with default styles - no icon', () => {
+    render(<Input data-testid="input" type="text" />);
 
-    expect(container.innerHTML).toContain('opacity-0');
+    const input = screen.getByTestId('input');
+
+    expect(input).toBeInTheDocument();
+    expect(screen.queryByTestId('input-icon')).not.toBeInTheDocument();
+    expect(input).toHaveClass('disabled:opacity-30'); // Should have classes for disabled styles
+    expect(input).not.toHaveClass(INPUT_ICON_CLASSES);
   });
 
-  test('should render with loading styles', () => {
-    const { container } = render(<Input type="text" isLoading />);
-
-    expect(container.innerHTML).toContain('opacity-100');
-    expect(container.innerHTML).toContain('opacity-30');
-  });
-
-  test('disabled should not show the loader', () => {
-    const { container } = render(
-      <Input type="text" data-testid="input" disabled />,
+  test('should render with icon styles', () => {
+    render(
+      <Input
+        data-testid="input"
+        type="text"
+        icon={<img data-testid="img" src="/test.jpg" alt="test" />}
+      />,
     );
 
-    expect(screen.getByTestId('input')).toHaveAttribute('disabled');
+    const input = screen.getByTestId('input');
 
-    expect(container.innerHTML).toContain('opacity-0');
-    expect(container.innerHTML).not.toContain('opacity-100');
-    expect(container.innerHTML).toContain('opacity-30');
-  });
-
-  test('isLoading should trigger disabled state', () => {
-    const { container } = render(
-      <Input type="text" data-testid="input" isLoading />,
-    );
-
-    expect(screen.getByTestId('input')).toHaveAttribute('disabled');
-    expect(container.innerHTML).not.toContain('opacity-0');
-    expect(container.innerHTML).toContain('opacity-100');
-    expect(container.innerHTML).toContain('opacity-30');
+    expect(input).toBeInTheDocument();
+    expect(screen.queryByTestId('input-icon')).toBeInTheDocument();
+    expect(input).toHaveClass(INPUT_ICON_CLASSES);
   });
 });

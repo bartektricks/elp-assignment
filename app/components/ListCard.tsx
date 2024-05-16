@@ -26,26 +26,30 @@ export default function ListCard({
     <li className="typography-m grid grid-cols-[theme(spacing.5)_1fr] gap-2 border-light-gray-4 border-t py-4">
       {image}
       <div className="text-dark-gray-2">
-        <header className={clsx(isUser ? 'mb-5' : 'mb-1')}>
+        <header>
           <Link className="mb-1 text-blue" to={link}>
             {title}
           </Link>
           {subtitle && <p>{subtitle}</p>}
         </header>
-        {body && (
-          <p className={clsx(isUser && 'typography-s text-darkest-gray')}>
-            {body}
-          </p>
-        )}
-        {footer && (
-          <footer
-            className={clsx(
-              'typography-xxs flex flex-wrap items-center gap-x-3.5 gap-y-1 text-nowrap',
-              isUser ? 'mt-2' : 'mt-4',
+        {(footer ?? body) && (
+          <div className={clsx(isUser ? 'mt-5' : 'mt-1')}>
+            {body && (
+              <p className={clsx(isUser && 'typography-s text-darkest-gray')}>
+                {body}
+              </p>
             )}
-          >
-            {footer}
-          </footer>
+            {footer && (
+              <footer
+                className={clsx(
+                  'typography-xxs flex flex-wrap items-center gap-x-3.5 gap-y-1 text-nowrap',
+                  isUser ? 'mt-2' : 'mt-4',
+                )}
+              >
+                {footer}
+              </footer>
+            )}
+          </div>
         )}
       </div>
     </li>
