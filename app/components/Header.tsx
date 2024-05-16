@@ -17,7 +17,7 @@ export default function Header({ queryValue }: HeaderProps) {
   );
 
   const onChange = debounce<[e: React.ChangeEvent<HTMLInputElement>]>(
-    { delay: 250 },
+    { delay: 300 },
     (e) => {
       const isFirstSearch = queryValue === null;
 
