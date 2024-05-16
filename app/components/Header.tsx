@@ -1,6 +1,7 @@
 import { Link, useNavigation, useSubmit } from '@remix-run/react';
 import { debounce } from 'radash';
 import { SEARCH_QUERY_PARAM } from '~/utils/constants';
+import Input from './Input';
 
 type HeaderProps = {
   queryValue: string | null;
@@ -10,9 +11,10 @@ export default function Header({ queryValue }: HeaderProps) {
   const submit = useSubmit();
   const navigation = useNavigation();
 
-  const isSearching =
+  const isSearching = Boolean(
     navigation.location &&
-    new URLSearchParams(navigation.location.search).has(SEARCH_QUERY_PARAM);
+      new URLSearchParams(navigation.location.search).has(SEARCH_QUERY_PARAM),
+  );
 
   const onChange = debounce<[e: React.ChangeEvent<HTMLInputElement>]>(
     { delay: 250 },
@@ -47,8 +49,7 @@ export default function Header({ queryValue }: HeaderProps) {
           />
         </svg>
       </Link>
-      <input
-        className="typography-m rounded-md border border-current bg-transparent px-4 py-1.5 text-light-gray-3 disabled:pointer-events-none disabled:opacity-30"
+      <Input
         type="text"
         role="searchbox"
         name={SEARCH_QUERY_PARAM}
@@ -56,8 +57,8 @@ export default function Header({ queryValue }: HeaderProps) {
         onChange={onChange}
         defaultValue={queryValue ?? ''}
         disabled={isSearching}
+        isLoading={isSearching}
       />
-      <div className="before:loader-6 before:loader-color-blue before:loader-thickness-1" />
     </header>
   );
 }
