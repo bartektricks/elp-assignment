@@ -4,11 +4,11 @@ import { useEffect, useRef } from 'react';
 import { SEARCH_QUERY_PARAM } from '~/utils/constants';
 import Input from './Input';
 
-type HeaderProps = {
+export type HeaderProps = {
   queryValue: string | null;
 };
 
-const FOCUS_KEY = '/';
+export const FOCUS_KEY = '/';
 
 export default function Header({ queryValue }: HeaderProps) {
   const ref = useRef<HTMLInputElement>(null);
@@ -44,13 +44,12 @@ export default function Header({ queryValue }: HeaderProps) {
     { delay: 300 },
     (e) => {
       const isFirstSearch = queryValue === null;
+      const formData = new FormData();
+      formData.append(SEARCH_QUERY_PARAM, e.target.value);
 
-      submit(
-        { [SEARCH_QUERY_PARAM]: e.target.value },
-        {
-          replace: !isFirstSearch,
-        },
-      );
+      submit(formData, {
+        replace: !isFirstSearch,
+      });
     },
   );
 
@@ -74,6 +73,7 @@ export default function Header({ queryValue }: HeaderProps) {
         </svg>
       </Link>
       <Input
+        data-testid="header-input"
         ref={ref}
         type="text"
         role="searchbox"
@@ -92,6 +92,7 @@ function SearchIcon({ isLoading }: { isLoading: boolean }) {
   if (isLoading) {
     return (
       <span
+        data-testid="header-loading-icon"
         role="status"
         aria-hidden="true"
         className="loader-5 loader-color-dark-gray p-1"
@@ -101,6 +102,7 @@ function SearchIcon({ isLoading }: { isLoading: boolean }) {
 
   return (
     <span
+      data-testid="header-key-icon"
       role="presentation"
       className="typography-s rounded-sm border border-current px-0.5 opacity-40"
     >
