@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react';
 import clsx from 'clsx';
 
-type ListCardProps = {
+export type ListCardProps = {
   image: React.JSX.Element;
   title: React.ReactNode;
   link: string;
