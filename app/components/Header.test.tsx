@@ -2,7 +2,6 @@ import { json } from '@remix-run/node';
 import { createRemixStub } from '@remix-run/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { sleep } from 'radash';
 import Header, { type HeaderProps, FOCUS_KEY } from './Header';
 
 const renderWithRemixStub = async (
@@ -12,13 +11,7 @@ const renderWithRemixStub = async (
     {
       path: '/',
       Component: () => <Header queryValue={queryValue} />,
-      loader: async ({ request }) => {
-        const url = new URL(request.url);
-
-        if (url.searchParams.has('q')) {
-          await sleep(1000);
-        }
-
+      loader: () => {
         return json({ q: '' });
       },
     },
