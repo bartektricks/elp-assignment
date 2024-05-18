@@ -9,6 +9,7 @@ export type UserFragmentType = Omit<UserFragmentFragment, ' $fragmentName'>;
 export const UserFragment = graphql(`
   fragment UserFragment on User {
     __typename
+    id
     name
     login
     bio
@@ -25,6 +26,7 @@ export type RepositoryFragmentType = Omit<
 export const RepositoryFragment = graphql(`
   fragment RepositoryFragment on Repository {
     __typename
+    id
     name
     description
     stargazerCount
