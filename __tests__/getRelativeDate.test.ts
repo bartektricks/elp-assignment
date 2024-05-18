@@ -1,5 +1,5 @@
 import { sub } from 'date-fns';
-import getRelativeDate from './getRelativeDate';
+import getRelativeDate from '~/utils/getRelativeDate';
 
 const staticDateInThePast = new Date(2024, 3, 31);
 

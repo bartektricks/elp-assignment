@@ -1,5 +1,5 @@
 import type { UserFragmentType } from '~/libs/fragments';
-import ListCard from './ListCard';
+import ListCard from '../../components/ListCard';
 
 export default function UserCard({
   name,

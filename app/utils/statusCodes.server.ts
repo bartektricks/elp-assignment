@@ -1,3 +1,5 @@
 import http2 from 'node:http2';
 
-export default http2.constants;
+const statusCodes = http2.constants;
+
+export default statusCodes;

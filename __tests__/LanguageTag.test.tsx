@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import LanguageTag from './LanguageTag';
+import LanguageTag from '../app/components/LanguageTag';
 
 const NAME = 'TypeScript';
 

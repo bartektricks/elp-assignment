@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Input from './Input';
+import Input from '../app/components/Input';
 
 const INPUT_ICON_CLASSES = 'pr-8 pl-4';
 

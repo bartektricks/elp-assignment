@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs, json, redirect } from '@remix-run/node';
-import type { SearchQuery } from '__generated__/gql/graphql';
 import { getUnmaskedFragmentData } from '~/gql';
+import type { SearchQuery } from '~/gql/types';
 import { getSearchResults } from '~/libs/api/search.server';
 import {
   RepositoryFragment,

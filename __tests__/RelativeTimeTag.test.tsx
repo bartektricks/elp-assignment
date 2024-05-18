@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import RelativeTimeTag from './RelativeTimeTag';
+import RelativeTimeTag from '../app/routes/_index/RelativeTimeTag';
 
 describe('RelativeTimeTag', () => {
   it('should render with a relative time', () => {

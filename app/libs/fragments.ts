@@ -1,8 +1,8 @@
+import { graphql } from '~/gql';
 import type {
   RepositoryFragmentFragment,
   UserFragmentFragment,
-} from '__generated__/gql/graphql';
-import { graphql } from '~/gql';
+} from '~/gql/types';
 
 export type UserFragmentType = Omit<UserFragmentFragment, ' $fragmentName'>;
 

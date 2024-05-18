@@ -2,7 +2,10 @@ import { json } from '@remix-run/node';
 import { createRemixStub } from '@remix-run/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Header, { type HeaderProps, FOCUS_KEY } from './Header';
+import Header, {
+  type HeaderProps,
+  FOCUS_KEY,
+} from '../app/routes/_index/Header';
 
 const renderWithRemixStub = async (
   { queryValue }: HeaderProps = { queryValue: null },

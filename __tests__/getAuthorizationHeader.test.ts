@@ -4,7 +4,7 @@ describe('getAuthorizationHeader', () => {
   it('should return an object with Authorization header when GH_AUTH_TOKEN is present', () => {
     vi.stubEnv('GH_AUTH_TOKEN', 'YOUR_AUTH_TOKEN');
 
-    import('./getAuthorizationHeader.server').then((response) => {
+    import('~/utils/getAuthorizationHeader.server').then((response) => {
       const getAuthorizationHeader = response.default;
 
       const expected = {
@@ -20,7 +20,7 @@ describe('getAuthorizationHeader', () => {
   });
 
   it('should return an object with empty Authorization header when GH_AUTH_TOKEN is not present', () => {
-    import('./getAuthorizationHeader.server').then((response) => {
+    import('~/utils/getAuthorizationHeader.server').then((response) => {
       const getAuthorizationHeader = response.default;
 
       const expected = {

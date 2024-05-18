@@ -25,7 +25,9 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
-      "~/gql": ["./__generated__/gql/index.ts"]
+      "~/plugins/*": ["./plugins/*"],
+      "~/gql": ["./__generated__/gql/index.ts"],
+      "~/gql/types": ["./__generated__/gql/graphql.ts"]
     },
     // Vite takes care of building everything, not tsc.
     "noEmit": true,

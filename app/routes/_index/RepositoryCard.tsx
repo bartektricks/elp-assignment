@@ -1,6 +1,6 @@
 import type { RepositoryFragmentType } from '~/libs/fragments';
-import LanguageTag from './LanguageTag';
-import ListCard from './ListCard';
+import LanguageTag from '../../components/LanguageTag';
+import ListCard from '../../components/ListCard';
 import RelativeTimeTag from './RelativeTimeTag';
 
 export default function RepositoryCard({

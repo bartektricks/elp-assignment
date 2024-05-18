@@ -1,5 +1,5 @@
-import generateFonts from './generateFonts';
-import generatePluginCss from './generatePluginCss';
+import generateFonts from 'plugins/generateFonts';
+import generatePluginCss from 'plugins/generatePluginCss';
 
 test('should generate typography classes', async () => {
   const css = await generatePluginCss({

@@ -1,8 +1,8 @@
 import ArrowLeftIcon from '~/components/ArrowLeftIcon';
 import Link from '~/components/Link';
-import RepositoryCard from '~/components/RepositoryCard';
-import UserCard from '~/components/UserCard';
 import { useIndexLoaderData } from '~/loaders/index/loader';
+import RepositoryCard from '~/routes/_index/RepositoryCard';
+import UserCard from '~/routes/_index/UserCard';
 import getSearchParamsStringFromObj from '~/utils/getSearchParamsStringFromObj';
 
 import indexLoader from '~/loaders/index/loader.server';

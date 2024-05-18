@@ -2,7 +2,7 @@ import { Link, useNavigation, useSubmit } from '@remix-run/react';
 import { debounce } from 'radash';
 import { useEffect, useRef, useState } from 'react';
 import { SEARCH_QUERY_PARAM } from '~/utils/constants';
-import Input from '../Input';
+import Input from '../../components/Input';
 import AnimatedSearchIcon from './AnimatedSearchIcon';
 
 export type HeaderProps = {

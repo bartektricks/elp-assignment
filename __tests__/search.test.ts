@@ -1,6 +1,6 @@
 // @vitest-environment node
 
-import { getSearchResults } from './search.server';
+import { getSearchResults } from '../app/libs/api/search.server';
 
 // TODO: maybe could have also a mocked scenario
 describe('getSearchResults', () => {

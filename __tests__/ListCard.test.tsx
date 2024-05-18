@@ -1,6 +1,6 @@
 import { createRemixStub } from '@remix-run/testing';
 import { render, screen } from '@testing-library/react';
-import ListCard, { type ListCardProps } from './ListCard';
+import ListCard, { type ListCardProps } from '../app/components/ListCard';
 
 const ImageMock = () => <img data-testid="image" src="test" alt="test" />;
 

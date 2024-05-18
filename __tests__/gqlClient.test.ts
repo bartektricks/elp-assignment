@@ -4,7 +4,7 @@ import { Client } from 'urql';
 
 describe('gqlClient', (test) => {
   test('is an instance of urql', async () => {
-    const { gqlClient } = await import('./gqlClient.server');
+    const { gqlClient } = await import('../app/libs/gqlClient.server');
 
     expect(gqlClient).toBeDefined();
     expect(gqlClient).toHaveProperty('query');
@@ -17,7 +17,7 @@ describe('gqlClient', (test) => {
       vi.resetModules();
       vi.stubEnv('NODE_ENV', env);
 
-      const { getTimeToLive } = await import('./gqlClient.server');
+      const { getTimeToLive } = await import('../app/libs/gqlClient.server');
 
       const ttl = getTimeToLive();
 
