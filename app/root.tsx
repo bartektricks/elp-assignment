@@ -13,7 +13,7 @@ import {
   json,
   useLoaderData,
 } from '@remix-run/react';
-import Header from './components/Header';
+import Header from './components/header/Header';
 import styles from './index.css?url';
 import { SEARCH_QUERY_PARAM } from './utils/constants';
 import statusCodes from './utils/statusCodes.server';

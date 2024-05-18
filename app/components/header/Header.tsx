@@ -1,8 +1,9 @@
 import { Link, useNavigation, useSubmit } from '@remix-run/react';
 import { debounce } from 'radash';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SEARCH_QUERY_PARAM } from '~/utils/constants';
-import Input from './Input';
+import Input from '../Input';
+import AnimatedSearchIcon from './AnimatedSearchIcon';
 
 export type HeaderProps = {
   queryValue: string | null;
@@ -12,6 +13,7 @@ export const FOCUS_KEY = '/';
 
 export default function Header({ queryValue }: HeaderProps) {
   const ref = useRef<HTMLInputElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
   const submit = useSubmit();
   const navigation = useNavigation();
 
@@ -37,7 +39,9 @@ export default function Header({ queryValue }: HeaderProps) {
 
   const isSearching = Boolean(
     navigation.location &&
-      new URLSearchParams(navigation.location.search).has(SEARCH_QUERY_PARAM),
+      new URLSearchParams(navigation.location.search).get(
+        SEARCH_QUERY_PARAM,
+      ) !== queryValue,
   );
 
   const onChange = debounce<[e: React.ChangeEvent<HTMLInputElement>]>(
@@ -46,6 +50,8 @@ export default function Header({ queryValue }: HeaderProps) {
       const isFirstSearch = queryValue === null;
       const formData = new FormData();
       formData.append(SEARCH_QUERY_PARAM, e.target.value);
+
+      setIsFocused(false);
 
       submit(formData, {
         replace: !isFirstSearch,
@@ -78,35 +84,16 @@ export default function Header({ queryValue }: HeaderProps) {
         type="text"
         role="searchbox"
         name={SEARCH_QUERY_PARAM}
+        onFocusCapture={() => setIsFocused(true)}
+        onBlurCapture={() => setIsFocused(false)}
         placeholder="Search"
         onChange={onChange}
         defaultValue={queryValue ?? ''}
         disabled={isSearching}
-        icon={<SearchIcon isLoading={isSearching} />}
+        icon={
+          !isFocused ? <AnimatedSearchIcon isLoading={isSearching} /> : null
+        }
       />
     </header>
-  );
-}
-
-function SearchIcon({ isLoading }: { isLoading: boolean }) {
-  if (isLoading) {
-    return (
-      <span
-        data-testid="header-loading-icon"
-        role="status"
-        aria-hidden="true"
-        className="loader-5 loader-color-dark-gray p-1"
-      />
-    );
-  }
-
-  return (
-    <span
-      data-testid="header-key-icon"
-      role="presentation"
-      className="typography-s rounded-sm border border-current px-0.5 opacity-40"
-    >
-      {FOCUS_KEY}
-    </span>
   );
 }
