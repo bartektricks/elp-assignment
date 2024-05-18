@@ -8,44 +8,23 @@ const SearchQuery = graphql(`
       edges {
         node {
           ... on User {
-            name
-            login
-            bio
-            location
-            avatarUrl
+            ...UserFragment
           }
         }
       }
     }
     repository: search(query: $repoQuery, type: REPOSITORY, first: 5) {
       repositoryCount
-      edges {
-        node {
+        edges {
+          node {
           ... on Repository {
-            name
-            description
-            owner {
-              login
+              ...RepositoryFragment
             }
-            primaryLanguage {
-              name
-              color
-            }
-            stargazers {
-              totalCount
-            }
-            licenseInfo {
-              name
-            }
-            issues {
-              totalCount
-            }
-            updatedAt
-          }
         }
       }
     }
-  }`);
+  }
+`);
 
 export function getSearchResults(query: string) {
   return gqlClient

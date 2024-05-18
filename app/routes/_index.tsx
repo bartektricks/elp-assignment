@@ -1,11 +1,47 @@
 import { type LoaderFunctionArgs, json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import LanguageTag from '~/components/LanguageTag';
-import ListCard from '~/components/ListCard';
-import RelativeTimeTag from '~/components/RelativeTimeTag';
+import type { SearchQuery } from '__generated__/gql/graphql';
+import RepositoryCard from '~/components/RepositoryCard';
+import UserCard from '~/components/UserCard';
+import { getUnmaskedFragmentData } from '~/gql';
 import { getSearchResults } from '~/libs/api/search.server';
+import {
+  RepositoryFragment,
+  type RepositoryFragmentType,
+  UserFragment,
+  type UserFragmentType,
+} from '~/libs/fragments';
 import getSearchQueryParam from '~/utils/getSearchQueryParam.server';
 import statusCodes from '~/utils/statusCodes.server';
+
+function getNameBasedOnTypename(
+  node: RepositoryFragmentType | UserFragmentType,
+) {
+  return node.__typename === 'Repository' ? node.owner.login : node.login;
+}
+
+// spread syntax keeps losing the type information
+function getMergedResponse(data: SearchQuery) {
+  const mergedResponse = [];
+
+  for (const edge of data.repository.edges ?? []) {
+    const repo = getUnmaskedFragmentData(RepositoryFragment, edge?.node);
+
+    if (repo) {
+      mergedResponse.push(repo);
+    }
+  }
+
+  for (const edge of data.user.edges ?? []) {
+    const user = getUnmaskedFragmentData(UserFragment, edge?.node);
+
+    if (user) {
+      mergedResponse.push(user);
+    }
+  }
+
+  return mergedResponse;
+}
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const q = getSearchQueryParam(request) ?? '';
@@ -17,13 +53,22 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     });
   }
 
-  return json(res.data, { status: statusCodes.HTTP_STATUS_OK });
+  const totalResults =
+    res.data.repository.repositoryCount + res.data.user.userCount;
+
+  const mergedResponse = getMergedResponse(res.data);
+  const sorted = mergedResponse.sort((a, b) =>
+    getNameBasedOnTypename(a).localeCompare(getNameBasedOnTypename(b)),
+  );
+
+  return json(
+    { results: sorted, totalResults },
+    { status: statusCodes.HTTP_STATUS_OK },
+  );
 };
 
 export default function Index() {
-  const { repository, user } = useLoaderData<typeof loader>();
-
-  const totalResults = repository.repositoryCount + user.userCount;
+  const { results, totalResults } = useLoaderData<typeof loader>();
 
   return (
     <main className="mx-auto w-full max-w-[59.375rem] px-4">
@@ -31,83 +76,12 @@ export default function Index() {
         {totalResults.toLocaleString()} results
       </h1>
       <ul>
-        {repository.edges?.map((edge) => {
-          if (edge?.node?.__typename !== 'Repository') return null;
-          const {
-            name,
-            owner,
-            description,
-            primaryLanguage,
-            licenseInfo,
-            updatedAt,
-            issues,
-            stargazers,
-          } = edge.node;
+        {results.map((result) => {
+          if (result.__typename === 'Repository') {
+            return <RepositoryCard key={result.name} {...result} />;
+          }
 
-          return (
-            <ListCard
-              key={name}
-              type={edge.node.__typename}
-              image={
-                <img
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                  src={'/favicon.png'}
-                  alt={'repo icon'}
-                />
-              }
-              title={`${owner.login}/${name}`}
-              link="#"
-              body={description}
-              footer={
-                <>
-                  <span>star: {stargazers.totalCount}</span>
-                  {primaryLanguage && <LanguageTag {...primaryLanguage} />}
-                  {licenseInfo && licenseInfo.name !== 'Other' && (
-                    <span>{licenseInfo.name}</span>
-                  )}
-                  {typeof updatedAt === 'string' && (
-                    <RelativeTimeTag dateTime={updatedAt} />
-                  )}
-                  {issues.totalCount > 0 && (
-                    <span>
-                      {issues.totalCount.toLocaleString()} issues need help
-                    </span>
-                  )}
-                </>
-              }
-            />
-          );
-        })}
-
-        {user.edges?.map((edge) => {
-          if (edge?.node?.__typename !== 'User') return null;
-          const { name, avatarUrl, login, bio, location } = edge.node;
-
-          return (
-            <ListCard
-              key={login}
-              type={edge.node.__typename}
-              image={
-                <a href={avatarUrl} target="_blank" rel="noreferrer">
-                  <img
-                    loading="lazy"
-                    width={20}
-                    height={20}
-                    className="rounded-full"
-                    src={avatarUrl}
-                    alt={`${name} avatar`.trim()}
-                  />
-                </a>
-              }
-              title={name ?? login}
-              subtitle={login}
-              link={`/user/${login}`}
-              body={bio}
-              footer={location}
-            />
-          );
+          return <UserCard key={result.login} {...result} />;
         })}
       </ul>
     </main>
