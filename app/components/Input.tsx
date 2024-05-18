@@ -18,7 +18,7 @@ const Input = forwardRef(function Input(
         ref={ref}
         {...props}
         className={clsx(
-          'typography-m rounded-md border border-current bg-transparent py-1.5 disabled:opacity-30',
+          'typography-m rounded-md border border-current bg-transparent py-1.5 transition-all disabled:opacity-30',
           icon ? 'pr-8 pl-4' : 'px-4',
         )}
       />
