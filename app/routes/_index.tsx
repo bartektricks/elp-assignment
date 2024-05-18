@@ -1,186 +1,60 @@
-import { type LoaderFunctionArgs, json, redirect } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
-import type { SearchQuery } from '__generated__/gql/graphql';
-import clsx from 'clsx';
+import ArrowLeftIcon from '~/components/ArrowLeftIcon';
+import Link from '~/components/Link';
 import RepositoryCard from '~/components/RepositoryCard';
 import UserCard from '~/components/UserCard';
-import { getUnmaskedFragmentData } from '~/gql';
-import { getSearchResults } from '~/libs/api/search.server';
-import {
-  RepositoryFragment,
-  type RepositoryFragmentType,
-  UserFragment,
-  type UserFragmentType,
-} from '~/libs/fragments';
-import { SEARCH_QUERY_PARAM } from '~/utils/constants';
-import statusCodes from '~/utils/statusCodes.server';
+import { useIndexLoaderData } from '~/loaders/index/loader';
+import getSearchParamsStringFromObj from '~/utils/getSearchParamsStringFromObj';
 
-/**
- * Returns the name based on the typename of the given node.
- * If the typename is 'Repository', it returns the login of the owner.
- * Otherwise, it returns the login of the node.
- *
- * @param node - The node object of type RepositoryFragmentType or UserFragmentType.
- * @returns The name based on the typename of the node.
- */
-function getNameBasedOnTypename(
-  node: RepositoryFragmentType | UserFragmentType,
-) {
-  return node.__typename === 'Repository' ? node.owner.login : node.login;
-}
+import indexLoader from '~/loaders/index/loader.server';
 
-/**
- * Merges the response data from the search query into a single array.
- *
- * Spread syntax keeps losing the type information.
- * It could be done with zod but the it's plugin for codegen doesn't work
- * I wanted to avoid repeating the shape of the response and was able to re-use their unmasking function
- * which originally is named useFragment so I skipped it while reading the docs...
- *
- * @param data - The search query data.
- * @returns An array containing the merged response data.
- */
-function getMergedResponse(data: SearchQuery) {
-  const mergedResponse = [];
-
-  for (const edge of data.repository.edges ?? []) {
-    const repo = getUnmaskedFragmentData(RepositoryFragment, edge?.node);
-
-    if (repo) {
-      mergedResponse.push(repo);
-    }
-  }
-
-  for (const edge of data.user.edges ?? []) {
-    const user = getUnmaskedFragmentData(UserFragment, edge?.node);
-
-    if (user) {
-      mergedResponse.push(user);
-    }
-  }
-
-  return mergedResponse;
-}
-
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-  const query = url.searchParams.get(SEARCH_QUERY_PARAM);
-  const currentPage = Number(url.searchParams.get('page')) || 0;
-
-  const res = await getSearchResults(query ?? 'michal', currentPage);
-
-  if (res.error ?? !res.data) {
-    throw json(`Failed to fetch query: ${query}`, {
-      status: statusCodes.HTTP_STATUS_NOT_FOUND,
-    });
-  }
-
-  const { user, repository } = res.data;
-
-  const totalResults = repository.repositoryCount + user.userCount;
-  const mergedResponse = getMergedResponse(res.data);
-
-  if (mergedResponse.length === 0 && currentPage > 0) {
-    throw redirect(`/?${SEARCH_QUERY_PARAM}=${query}`, { status: 301 });
-  }
-
-  const sorted = mergedResponse.sort((a, b) =>
-    getNameBasedOnTypename(a).localeCompare(getNameBasedOnTypename(b)),
-  );
-
-  const hasPreviousPage =
-    repository.pageInfo.hasPreviousPage || user.pageInfo.hasPreviousPage;
-  const hasNextPage =
-    repository.pageInfo.hasNextPage || user.pageInfo.hasNextPage;
-
-  return json(
-    {
-      results: sorted,
-      totalResults,
-      pageInfo: {
-        hasPreviousPage,
-        hasNextPage,
-      },
-      query,
-      currentPage,
-    },
-    { status: statusCodes.HTTP_STATUS_OK },
-  );
-};
+export const loader = indexLoader;
 
 export default function Index() {
-  const { results, totalResults, pageInfo, query, currentPage } =
-    useLoaderData<typeof loader>();
+  const { results, totalResults } = useIndexLoaderData();
 
   return (
-    <main className="mx-auto w-full max-w-[59.375rem] px-4">
+    <main className="mx-auto w-full max-w-[59.375rem] px-4 pb-16 md:pb-[4.5rem]">
       <h1 className="typography-l pt-8 pb-5">
         {totalResults.toLocaleString()} results
       </h1>
-      <ul>
+      <ul className="mb-8">
+        {/* No destructuring to make typescript happy */}
         {results.map((result) => {
           if (result.__typename === 'Repository') {
-            return <RepositoryCard key={result.name} {...result} />;
+            return <RepositoryCard key={result.id} {...result} />;
           }
 
-          return <UserCard key={result.login} {...result} />;
+          return <UserCard key={result.id} {...result} />;
         })}
-
-        {totalResults > 0 && (
-          <>
-            <Link
-              to={{
-                search: getSearchParamsStringFromObj({
-                  q: query,
-                  page: currentPage - 1,
-                }),
-              }}
-              className={clsx(
-                !pageInfo.hasPreviousPage &&
-                  'pointer-events-none cursor-not-allowed opacity-50',
-              )}
-              aria-disabled={!pageInfo.hasPreviousPage}
-            >
-              Previous
-            </Link>
-            <Link
-              to={{
-                search: getSearchParamsStringFromObj({
-                  q: query,
-                  page: currentPage + 1,
-                }),
-              }}
-              className={clsx(
-                !pageInfo.hasNextPage &&
-                  'pointer-events-none cursor-not-allowed opacity-50',
-              )}
-              aria-disabled={!pageInfo.hasNextPage}
-            >
-              Next
-            </Link>
-          </>
-        )}
       </ul>
+      {totalResults > 0 && (
+        <div className="flex items-center justify-center gap-10">
+          <NavigationLink isPrev />
+          <NavigationLink />
+        </div>
+      )}
     </main>
   );
 }
 
-/**
- * Converts an object into a search parameter string.
- *
- * @param obj - The object containing key-value pairs to be converted.
- * @returns The search parameter string beginning with ?.
- */
-function getSearchParamsStringFromObj(
-  obj: Record<string, string | number | undefined | null>,
-) {
-  const searchParams = new URLSearchParams();
+export function NavigationLink({ isPrev }: { isPrev?: boolean }) {
+  const { query, pageInfo, currentPage } = useIndexLoaderData();
+  const isDisabled = !pageInfo[isPrev ? 'hasPreviousPage' : 'hasNextPage'];
 
-  for (const [key, value] of Object.entries(obj)) {
-    if (value) {
-      searchParams.append(key, String(value));
-    }
-  }
-
-  return `?${searchParams.toString()}`;
+  return (
+    <Link
+      to={{
+        search: getSearchParamsStringFromObj({
+          q: query,
+          page: currentPage + (isPrev ? -1 : 1),
+        }),
+      }}
+      className="px-3 py-2"
+      aria-disabled={isDisabled}
+    >
+      {isPrev && <ArrowLeftIcon />}
+      {isPrev ? 'Previous' : 'Next'}
+      {isPrev || <ArrowLeftIcon rotate={180} />}
+    </Link>
+  );
 }
