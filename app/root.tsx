@@ -15,7 +15,7 @@ import {
 } from '@remix-run/react';
 import Header from './components/Header';
 import styles from './index.css?url';
-import getSearchQueryParam from './utils/getSearchQueryParam.server';
+import { SEARCH_QUERY_PARAM } from './utils/constants';
 import statusCodes from './utils/statusCodes.server';
 
 export const links: LinksFunction = () => [
@@ -36,13 +36,14 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const q = getSearchQueryParam(request);
+  const url = new URL(request.url);
+  const queryValue = url.searchParams.get(SEARCH_QUERY_PARAM) ?? '';
 
-  return json({ q }, { status: statusCodes.HTTP_STATUS_OK });
+  return json({ queryValue }, { status: statusCodes.HTTP_STATUS_OK });
 };
 
 export default function App() {
-  const { q } = useLoaderData<typeof loader>();
+  const { queryValue } = useLoaderData<typeof loader>();
 
   return (
     <html lang="en" className="font-medium font-roboto">
@@ -53,7 +54,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Header queryValue={q} />
+        <Header queryValue={queryValue} />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
