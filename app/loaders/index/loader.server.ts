@@ -77,7 +77,7 @@ const indexLoader = async ({ request }: LoaderFunctionArgs) => {
   const mergedResponse = getMergedResponse(res.data);
 
   if (mergedResponse.length === 0 && currentPage > 0) {
-    throw redirect(`/?${SEARCH_QUERY_PARAM}=${query}`, { status: 301 });
+    throw redirect(`/?${SEARCH_QUERY_PARAM}=${query}`);
   }
 
   const sorted = mergedResponse.sort((a, b) =>
