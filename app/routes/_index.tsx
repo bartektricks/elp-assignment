@@ -15,18 +15,31 @@ import {
 import { SEARCH_QUERY_PARAM } from '~/utils/constants';
 import statusCodes from '~/utils/statusCodes.server';
 
+/**
+ * Returns the name based on the typename of the given node.
+ * If the typename is 'Repository', it returns the login of the owner.
+ * Otherwise, it returns the login of the node.
+ *
+ * @param node - The node object of type RepositoryFragmentType or UserFragmentType.
+ * @returns The name based on the typename of the node.
+ */
 function getNameBasedOnTypename(
   node: RepositoryFragmentType | UserFragmentType,
 ) {
   return node.__typename === 'Repository' ? node.owner.login : node.login;
 }
 
-/*
-  Spread syntax keeps losing the type information.
-  It could be done with zod but the it's plugin for codegen doesn't work
-  I wanted to avoid repeating the shape of the response and was able to re-use their unmasking function
-  which originally is named useFragment so I skipped it while reading the docs...
-*/
+/**
+ * Merges the response data from the search query into a single array.
+ *
+ * Spread syntax keeps losing the type information.
+ * It could be done with zod but the it's plugin for codegen doesn't work
+ * I wanted to avoid repeating the shape of the response and was able to re-use their unmasking function
+ * which originally is named useFragment so I skipped it while reading the docs...
+ *
+ * @param data - The search query data.
+ * @returns An array containing the merged response data.
+ */
 function getMergedResponse(data: SearchQuery) {
   const mergedResponse = [];
 
@@ -51,10 +64,10 @@ function getMergedResponse(data: SearchQuery) {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const query = url.searchParams.get(SEARCH_QUERY_PARAM) ?? '';
+  const query = url.searchParams.get(SEARCH_QUERY_PARAM);
   const currentPage = Number(url.searchParams.get('page')) || 0;
 
-  const res = await getSearchResults(query, currentPage);
+  const res = await getSearchResults(query ?? 'michal', currentPage);
 
   if (res.error ?? !res.data) {
     throw json(`Failed to fetch query: ${query}`, {
@@ -62,9 +75,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     });
   }
 
-  const totalResults =
-    res.data.repository.repositoryCount + res.data.user.userCount;
+  const { user, repository } = res.data;
 
+  const totalResults = repository.repositoryCount + user.userCount;
   const mergedResponse = getMergedResponse(res.data);
 
   if (mergedResponse.length === 0 && currentPage > 0) {
@@ -76,11 +89,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   );
 
   const hasPreviousPage =
-    res.data.repository.pageInfo.hasPreviousPage ||
-    res.data.user.pageInfo.hasPreviousPage;
+    repository.pageInfo.hasPreviousPage || user.pageInfo.hasPreviousPage;
   const hasNextPage =
-    res.data.repository.pageInfo.hasNextPage ||
-    res.data.user.pageInfo.hasNextPage;
+    repository.pageInfo.hasNextPage || user.pageInfo.hasNextPage;
 
   return json(
     {
@@ -119,9 +130,10 @@ export default function Index() {
           <>
             <Link
               to={{
-                search: `?q=${query}${
-                  currentPage > 1 ? `&page=${currentPage - 1}` : ''
-                }`,
+                search: getSearchParamsStringFromObj({
+                  q: query,
+                  page: currentPage - 1,
+                }),
               }}
               className={clsx(
                 !pageInfo.hasPreviousPage &&
@@ -133,7 +145,10 @@ export default function Index() {
             </Link>
             <Link
               to={{
-                search: `?q=${query}&page=${currentPage + 1}`,
+                search: getSearchParamsStringFromObj({
+                  q: query,
+                  page: currentPage + 1,
+                }),
               }}
               className={clsx(
                 !pageInfo.hasNextPage &&
@@ -148,4 +163,24 @@ export default function Index() {
       </ul>
     </main>
   );
+}
+
+/**
+ * Converts an object into a search parameter string.
+ *
+ * @param obj - The object containing key-value pairs to be converted.
+ * @returns The search parameter string beginning with ?.
+ */
+function getSearchParamsStringFromObj(
+  obj: Record<string, string | number | undefined | null>,
+) {
+  const searchParams = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (value) {
+      searchParams.append(key, String(value));
+    }
+  }
+
+  return `?${searchParams.toString()}`;
 }

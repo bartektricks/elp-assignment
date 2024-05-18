@@ -5,6 +5,12 @@ import { env } from '~/utils/env';
 import getAuthorizationHeader from '~/utils/getAuthorizationHeader.server';
 import { logger } from './logger.server';
 
+/**
+ * Returns the time to live (TTL) value based on the current environment.
+ * In production environment, the TTL is set to 2 minutes (1000 * 60 * 2).
+ * In other environments, the TTL is set to 1 minute (1000 * 60).
+ * @returns The time to live value in milliseconds.
+ */
 export const getTimeToLive = () => {
   if (env.NODE_ENV === 'production') return 1000 * 60 * 2; // 2 minutes
 
