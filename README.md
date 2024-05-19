@@ -57,6 +57,7 @@ pnpm start
 - [Codegen](https://graphql-code-generator.com/) - to generate types for the queries and mutations
 - [Radash](https://github.com/sodiray/radash) - modern replacement for Lodash
 - [Pino](https://github.com/pinojs/pino) - lightweight logger for the server with pretty print
+- [Framer Motion](https://www.framer.com/motion/) - for animations
 
 #### Code quality
 
@@ -68,3 +69,4 @@ pnpm start
 
 - [Vitest](https://vitest.dev/) - unit tests
 - [Testing Library React](https://testing-library.com/docs/react-testing-library/intro/) - for testing React components
+- [MSW](https://mswjs.io/) - for mocking the API requests

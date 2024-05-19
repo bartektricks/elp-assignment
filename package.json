@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "postinstall": "lefthook install",
+    "postinstall": "lefthook install && pnpm codegen",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "check": "biome check . --apply",
