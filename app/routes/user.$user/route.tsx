@@ -24,7 +24,7 @@ export default function User() {
     <main className="px-6 py-8 md:py-11">
       <div className="mx-auto max-w-screen-lg text-center">
         <img
-          className="mx-auto mb-4 aspect-square w-full max-w-[18.5rem] rounded-full"
+          className="mb-4 inline-block aspect-square w-full max-w-[18.5rem] rounded-full"
           src={avatarUrl}
           alt={`${name ?? login} Avatar`}
         />
