@@ -1,5 +1,5 @@
 import { AnimatePresence, type AnimationProps, motion } from 'framer-motion';
-import { FOCUS_KEY } from '../../../components/Header';
+import { SEARCH_FOCUS_KEY } from '~/utils/constants';
 
 const SEARCH_ICON_ANIMATION_PROPS = {
   initial: { opacity: 0 },
@@ -28,7 +28,7 @@ function AnimatedSearchIcon({ isLoading }: { isLoading: boolean }) {
             className="typography-s rounded-sm border border-current px-0.5 opacity-40"
             {...SEARCH_ICON_ANIMATION_PROPS}
           >
-            {FOCUS_KEY}
+            {SEARCH_FOCUS_KEY}
           </motion.span>
         )}
       </span>
