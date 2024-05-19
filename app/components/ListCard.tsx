@@ -23,7 +23,7 @@ export default function ListCard({
   const isUser = type === 'User';
 
   return (
-    <li className="typography-m grid grid-cols-[theme(spacing.5)_1fr] gap-2 border-light-gray-4 border-t py-4">
+    <li className="typography-m flex items-start gap-2 border-light-gray-4 border-t py-4">
       {image}
       <div className="text-dark-gray-2">
         <header>
