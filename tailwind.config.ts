@@ -9,6 +9,12 @@ export default {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
       },
+      content: {
+        'data-tooltip': 'attr(data-tooltip)',
+      },
+      spacing: {
+        'full-1': 'calc(100% + theme(spacing.1))', // Could build an utility function for full +- spacing.
+      },
     },
     colors: {
       blue: '#166CD7',

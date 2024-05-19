@@ -41,7 +41,12 @@
         "noUnusedImports": "error"
       },
       "nursery": {
-        "useSortedClasses": "warn"
+        "useSortedClasses": {
+          "level": "warn",
+          "options": {
+            "functions": ["clsx"]
+          }
+        }
       }
     }
   }

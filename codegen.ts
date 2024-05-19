@@ -27,6 +27,7 @@ const config: CodegenConfig = {
           PreciseDateTime: { input: 'string', output: 'string' },
           URI: { input: 'string', output: 'string' },
           X509Certificate: { input: 'string', output: 'string' },
+          Date: { input: 'string', output: 'string' },
         },
       },
     },

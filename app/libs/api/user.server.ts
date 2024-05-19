@@ -16,6 +16,19 @@ const UserQuery = graphql(`
       starredRepositories {
         totalCount
       }
+      contributionsCollection {
+        contributionCalendar {
+          colors
+          totalContributions
+          weeks {
+            contributionDays {
+              color
+              contributionCount
+              date
+            }
+          }
+        }
+      }
     }
   }
 `);
