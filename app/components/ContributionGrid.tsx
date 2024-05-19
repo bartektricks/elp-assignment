@@ -21,7 +21,7 @@ export default function ContributionGrid({
       <h3>
         {totalContributions.toLocaleString()} contributions in the last year
       </h3>
-      <div className="my-2 grid auto-cols-max grid-flow-col grid-rows-7 justify-center gap-1">
+      <div className="my-2 grid auto-cols-max grid-flow-col overflow-x-auto grid-rows-7 justify-center gap-1">
         {contributionDays.map(({ date, color, contributionCount }) => (
           <Block
             key={date}
@@ -49,7 +49,7 @@ function Block({
   tooltipContent,
 }: { color?: string; tooltipContent?: string }) {
   const classes = clsx(
-    'relative size-2.5 cursor-pointer rounded-sm bg-light-gray-2',
+    'relative size-2.5 cursor-pointer overflow-hidden rounded-sm bg-light-gray-2',
     {
       'typography-xxs text-nowrap before:pointer-events-none before:absolute before:right-1/2 before:bottom-full-1 before:z-50 before:block before:translate-x-1/2 before:rounded-md before:bg-light-gray-2 before:p-2 before:text-dark-gray-2 before:opacity-0 focus:before:opacity-100 hover:before:opacity-100 before:transition-all before:duration-150 before:content-data-tooltip':
         tooltipContent,
