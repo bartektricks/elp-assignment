@@ -1,8 +1,8 @@
 import BookIcon from '~/assets/icons/book.svg?react';
 import StarIcon from '~/assets/icons/star.svg?react';
+import LanguageTag from '~/components/LanguageTag';
+import ListCard from '~/components/ListCard';
 import type { RepositoryFragmentType } from '~/libs/fragments';
-import LanguageTag from '../../components/LanguageTag';
-import ListCard from '../../components/ListCard';
 import RelativeTimeTag from './RelativeTimeTag';
 
 export default function RepositoryCard({

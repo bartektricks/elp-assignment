@@ -1,7 +1,7 @@
 import ChevronLeftIcon from '~/assets/icons/chevron-left.svg?react';
 import Link from '~/components/Link';
-import { useIndexLoaderData } from '~/loaders/index/loader';
 import getSearchParamsStringFromObj from '~/utils/getSearchParamsStringFromObj';
+import { useIndexLoaderData } from '../loader-hooks';
 
 export default function BottomNav() {
   return (

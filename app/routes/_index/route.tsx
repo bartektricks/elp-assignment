@@ -1,9 +1,8 @@
-import { useIndexLoaderData } from '~/loaders/index/loader';
-import RepositoryCard from '~/routes/_index/RepositoryCard';
-import UserCard from '~/routes/_index/UserCard';
-
-import indexLoader from '~/loaders/index/loader.server';
-import BottomNav from './BottomNav';
+import BottomNav from './components/BottomNav';
+import RepositoryCard from './components/RepositoryCard';
+import UserCard from './components/UserCard';
+import { useIndexLoaderData } from './loader-hooks';
+import indexLoader from './loader.server';
 
 export const loader = indexLoader;
 

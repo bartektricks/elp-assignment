@@ -1,5 +1,5 @@
 import { AnimatePresence, type AnimationProps, motion } from 'framer-motion';
-import { FOCUS_KEY } from './Header';
+import { FOCUS_KEY } from '../../../components/Header';
 
 const SEARCH_ICON_ANIMATION_PROPS = {
   initial: { opacity: 0 },

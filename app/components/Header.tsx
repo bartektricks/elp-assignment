@@ -2,9 +2,9 @@ import { Link, useNavigation, useSubmit } from '@remix-run/react';
 import { debounce } from 'radash';
 import { useEffect, useRef, useState } from 'react';
 import GHLogo from '~/assets/gh-logo.svg?react';
+import Input from '~/components/Input';
 import { SEARCH_QUERY_PARAM } from '~/utils/constants';
-import Input from '../../components/Input';
-import AnimatedSearchIcon from './AnimatedSearchIcon';
+import AnimatedSearchIcon from '../routes/_index/components/AnimatedSearchIcon';
 
 export type HeaderProps = {
   queryValue: string | null;
@@ -63,7 +63,6 @@ export default function Header({ queryValue }: HeaderProps) {
   return (
     <header className="flex items-center justify-between gap-x-4 bg-darkest-gray px-5 py-2.5 md:py-4">
       <Link to="/">
-        {/* Could use SVGR but it's only one logo */}
         <GHLogo />
       </Link>
       <Input
