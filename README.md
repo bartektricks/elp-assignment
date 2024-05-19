@@ -70,3 +70,28 @@ pnpm start
 - [Vitest](https://vitest.dev/) - unit tests
 - [Testing Library React](https://testing-library.com/docs/react-testing-library/intro/) - for testing React components
 - [MSW](https://mswjs.io/) - for mocking the API requests
+
+## Folder structure
+
+```markdown
+.
+├── __generated__/ - generated graphql helpers and types
+├── __tests__/ - unit tests
+├── app/
+│   ├── assets/ - svgs and icons
+│   ├── components/ - globally shared components
+│   ├── libs/
+│   │   ├── api - api call functions
+│   │   ├── fragments.ts - graphql fragments (more like typeguard helpers)
+│   │   ├── gqlClient.server.ts - graphql client
+│   │   └── logger.server.ts - server logger
+│   ├── routes/
+│   │   └── (page)/
+│   │       ├── components/ - page specific components
+│   │       ├── loader.server.ts - server side loader
+│   │       ├── loaderHooks.ts - hooks for the loader
+│   │       └── route.tsx - page component
+│   └── utils/ - utility functions
+├── plugins/ - TailwindCSS plugins
+└── public/ - public assets
+```
