@@ -1,3 +1,5 @@
+import { useNavigation } from '@remix-run/react';
+import clsx from 'clsx';
 import BottomNav from './components/BottomNav';
 import RepositoryCard from './components/RepositoryCard';
 import UserCard from './components/UserCard';
@@ -8,13 +10,19 @@ export const loader = indexLoader;
 
 export default function Index() {
   const { results, totalResults } = useIndexLoaderData();
+  const navigation = useNavigation();
 
   return (
     <main className="mx-auto w-full max-w-[59.375rem] px-4 pb-16 md:pb-[4.5rem]">
       <h1 className="typography-l pt-8 pb-5">
         {totalResults.toLocaleString()} results
       </h1>
-      <ul className="mb-8">
+      <ul
+        className={clsx(
+          'mb-8',
+          navigation.state === 'loading' && 'pointer-events-none opacity-50',
+        )}
+      >
         {/* No destructuring to make typescript happy */}
         {results.map((result) => {
           if (result.__typename === 'Repository') {

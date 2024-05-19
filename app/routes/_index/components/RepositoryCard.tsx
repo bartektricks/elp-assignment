@@ -20,7 +20,6 @@ export default function RepositoryCard({
       type="Repository"
       image={<BookIcon width={20} height={20} className="text-dark-gray-1" />}
       title={`${owner.login}/${name}`}
-      link="#"
       body={description}
       footer={
         <>

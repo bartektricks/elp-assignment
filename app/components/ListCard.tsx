@@ -4,7 +4,7 @@ import clsx from 'clsx';
 export type ListCardProps = {
   image: React.JSX.Element;
   title: React.ReactNode;
-  link: string;
+  link?: string;
   body?: React.ReactNode;
   subtitle?: React.ReactNode;
   footer?: React.ReactNode;
@@ -27,7 +27,11 @@ export default function ListCard({
       {image}
       <div className="flex-shrink basis-full text-dark-gray-2">
         <header>
-          <Link className="mb-1 text-blue" to={link}>
+          <Link
+            tabIndex={link ? 0 : -1}
+            className={clsx('mb-1 text-blue', !link && 'pointer-events-none')}
+            to={link ?? ''}
+          >
             {title}
           </Link>
           {subtitle && <p>{subtitle}</p>}
