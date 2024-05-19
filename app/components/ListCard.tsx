@@ -25,7 +25,7 @@ export default function ListCard({
   return (
     <li className="typography-m flex items-start gap-2 border-light-gray-4 border-t py-4">
       {image}
-      <div className="text-dark-gray-2">
+      <div className="flex-shrink basis-full text-dark-gray-2">
         <header>
           <Link className="mb-1 text-blue" to={link}>
             {title}
