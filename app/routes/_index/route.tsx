@@ -1,8 +1,8 @@
 import BottomNav from './components/BottomNav';
 import RepositoryCard from './components/RepositoryCard';
 import UserCard from './components/UserCard';
-import { useIndexLoaderData } from './loader-hooks';
 import indexLoader from './loader.server';
+import { useIndexLoaderData } from './loaderHooks';
 
 export const loader = indexLoader;
 
