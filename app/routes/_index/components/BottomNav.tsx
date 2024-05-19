@@ -29,7 +29,7 @@ function NavigationLink({ isPrev }: { isPrev?: boolean }) {
     >
       {isPrev && <ChevronLeftIcon />}
       {isPrev ? 'Previous' : 'Next'}
-      {isPrev || <ChevronLeftIcon transform="rotate(180)" />}
+      {isPrev || <ChevronLeftIcon className="rotate-180" />}
     </Link>
   );
 }

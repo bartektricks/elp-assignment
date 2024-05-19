@@ -10,7 +10,7 @@ const SEARCH_ICON_ANIMATION_PROPS = {
 function AnimatedSearchIcon({ isLoading }: { isLoading: boolean }) {
   return (
     <AnimatePresence initial={false}>
-      <span>
+      <span className="hidden md:block">
         {isLoading ? (
           <motion.span
             key="loading-icon"
