@@ -1,3 +1,4 @@
+import type { MetaFunction } from '@remix-run/node';
 import StarIcon from '~/assets/icons/star.svg?react';
 import UsersIcon from '~/assets/icons/users.svg?react';
 import ContributionGrid from '~/components/ContributionGrid';
@@ -5,6 +6,12 @@ import userLoader from './loader.server';
 import { useUserLoaderData } from './loaderHooks';
 
 export const loader = userLoader;
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => [
+  {
+    title: `${data?.name ?? data?.login ?? 'User profile'} - EL Hub`,
+  },
+];
 
 export default function User() {
   const {
