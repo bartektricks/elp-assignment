@@ -15,5 +15,11 @@ export default function getSearchParamsStringFromObj(
     }
   }
 
+  const searchParamsString = searchParams.toString();
+
+  if (searchParamsString === '') {
+    return '';
+  }
+
   return `?${searchParams.toString()}`;
 }
