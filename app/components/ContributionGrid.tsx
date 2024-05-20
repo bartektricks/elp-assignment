@@ -60,12 +60,12 @@ const Block = forwardRef<
   {
     color?: string;
   } & Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>
->(({ color, ...props }, ref) => {
+>(({ color, style, ...props }, ref) => {
   return (
     <div
       ref={ref}
       role="presentation"
-      style={{ backgroundColor: color }}
+      style={{ ...(style ?? {}), backgroundColor: color }}
       className="size-2.5 cursor-pointer overflow-hidden rounded-sm bg-light-gray-2"
       {...props}
     />
