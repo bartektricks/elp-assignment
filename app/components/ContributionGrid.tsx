@@ -45,8 +45,9 @@ export default function ContributionGrid({
       </Tooltip.Provider>
       <div className="typography-xxs ml-auto inline-flex items-center gap-1">
         Less
-        {[undefined, ...colors].map((color) => (
-          <Block key={color ?? 'no-color'} color={color} />
+        <Block />
+        {colors.map((color) => (
+          <Block key={color} color={color} />
         ))}
         More
       </div>
