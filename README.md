@@ -12,11 +12,13 @@ GH_AUTH_TOKEN=your_token_here
 
 ## Development
 
-Install dependencies:
+Install dependencies and generate types:
 
 ```shellscript
 pnpm install
 ```
+
+> NOTE: the types should be generated automatically after the installation with the  `postinstall` script. If you encounter any problems try to run it manually.
 
 Run the dev server:
 
@@ -30,7 +32,7 @@ Run the codegen in watch mode:
 pnpm codegen --watch
 ```
 
-NOTE: in this version of the project the codegen should take the schema from node_modules so it's not abusing the GitHub API rate limit.
+> NOTE: in this version of the project the codegen should take the schema from node_modules so it's not abusing the GitHub API rate limit.
 
 ## Deployment
 
