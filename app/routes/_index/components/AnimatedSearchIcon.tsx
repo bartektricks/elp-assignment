@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { AnimatePresence, type AnimationProps, motion } from 'framer-motion';
 import { SEARCH_FOCUS_KEY } from '~/utils/constants';
 
@@ -7,10 +8,15 @@ const SEARCH_ICON_ANIMATION_PROPS = {
   exit: { opacity: 0 },
 } satisfies AnimationProps;
 
-function AnimatedSearchIcon({ isLoading }: { isLoading: boolean }) {
+type AnimatedSearchIconProps = {
+  isLoading?: boolean;
+  isHidden?: boolean;
+};
+
+function AnimatedSearchIcon({ isLoading, isHidden }: AnimatedSearchIconProps) {
   return (
     <AnimatePresence initial={false}>
-      <span className="hidden md:block">
+      <span className={clsx('hidden', isHidden ? 'md:hidden' : 'md:block')}>
         {isLoading ? (
           <motion.span
             key="loading-icon"

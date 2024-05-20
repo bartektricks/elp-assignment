@@ -70,7 +70,7 @@ export default function SearchInput({ value }: SearchInputProps) {
       onChange={onChange}
       defaultValue={value ?? ''}
       disabled={isSearching}
-      icon={!isFocused ? <AnimatedSearchIcon isLoading={isSearching} /> : null}
+      icon={<AnimatedSearchIcon isHidden={isFocused} isLoading={isSearching} />}
     />
   );
 }
